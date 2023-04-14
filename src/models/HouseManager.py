@@ -1,4 +1,5 @@
-class House :
+
+class HouseManager :
     def __init__(self) :
         self.nama : String
         self.rumah_id : String
@@ -8,5 +9,6 @@ class House :
         self.ConsumptionMonth : integer
         self.isSimulate : boolean
         self.circuitBreaker : CircuitBreaker
+
 
     
