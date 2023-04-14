@@ -7,7 +7,7 @@ class House :
         self.cnt_room : int
         self.ConsumptionMonth : int
         self.isSimulate : bool
-        self.circuitBreaker : CircuitBraker
+        self.idCircuit : int
     
     def setHouse(newName, newPower){
         self.nama = newName
