@@ -1,42 +1,28 @@
-import sqlite3
-# class House:
-#     def __init__(self,nama,voltase):
-#         self.nama = nama
-#         self.volt = voltase
-#     def getName(self):
-#         return self.nama
-#     def getVolt(self):
-#         return self.volt
-#     def __str__(self):
-#         return "Rumah "+self.nama+" berkapasitas "+str(self.volt)
-class HouseManager:
-    def __init__(self, listHome : list):
-        self.listHome : list = listHome
-    def add(self,nama,voltase):
-        House(nama,voltase)#nanti 
-    def removehouse(self,no):
-        buang = self.listHome.pop(no-1)
-    def getID(self,no):
-        return self.listHome[no-1][0]
-    def renameHouse(self,no,nama):
-        self.listHome[no-1] = nama
-        idubah = self.getID(no)
-        conn = sqlite3.connect("../db/wireWolf.db")
-        curr = conn.cursor()
-        sql_command = """UPDATE rumah SET nama = {0} WHERE id = {1};""".format(nama,idubah)
-        curr.execute(sql_command)
-        conn.commit()
-        conn.close()
-    def getListHouse(self):
-        conn = sqlite3.connect("../db/wireWolf.db")
-        curr = conn.cursor()
-        sql_command = """SELECT id, nama FROM rumah;"""
-        curr.execute(sql_command)
-        ans = curr.fetchall()
-        conn.commit()
-        conn.close()
-        return ans
-    def getHouse(self,no):
-        return self.listHome[no-1]
-    def getHouseList(self):
-        return self.listHome
+import models.House as House
+class HouseController:
+    def add(self,nama : str,power : int):
+        try:
+            House(nama,power)
+        except:
+            print("Gagal menambahkan rumah")
+    def removehouse(self,id):
+        try:
+            ambil = House.getHouseById(id)
+            ambil.deleteHouse()
+        except:
+            print("Gagal menghapus rumah")
+    def renameHouse(self,id,nama):
+        try:
+            ambil = House.getHouseById(id)
+            ambil.editHouseName(nama)
+        except:
+            print("Gagal mengubah nama rumah")
+    def changePower(self,id,power):
+        try:
+            ambil = House.getHouseById(id)
+            ambil.editPowerCap(power)
+        except:
+            print("Gagal mengubah kapasitas daya")
+    def getHouse(self,id):
+        return House.getHouseById(id)
+    
