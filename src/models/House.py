@@ -2,7 +2,7 @@ import sqlite3
 
 class House :
     # CONSTRUCTOR
-    def __init__(self, name, power) :
+    def __init__(self, name:str, power:int) :
         self.id:int
         self.name:str = name 
         self.power:int = power
@@ -42,7 +42,8 @@ class House :
 
 
     # CONSTRUCTOR BY ID
-    def getHouseById(cls, idHouse):
+    @classmethod
+    def getHouseById(cls, idHouse:int):
         conn = sqlite3.connect('db/wirewolf.db')
         curr = conn.cursor()
 
@@ -50,8 +51,9 @@ class House :
             """
                 SELECT * 
                 FROM rumah
-                WHERE id={idHouse}
+                WHERE id={0}
             """
+            .format(idHouse)
         )
         data = curr.fetchall()
         houseId, houseName, housePower, circuitId = data
@@ -67,8 +69,53 @@ class House :
 
         return self
 
-    def addRoom():
-        #something
+    def editHouseName(self, newName:str):
+        conn = sqlite3.connect('db/wirewolf.db')
+        curr = conn.cursor()
 
+        curr.execute(
+            """
+            UPDATE rumah
+            SET nama = {0}
+            WHERE id = {1}
+            """
+            .format(newName, self.id)
+        )
+
+        curr.close()
+        conn.close()      
+    
+    def editPowerCap(self, newPower:int):
+        conn = sqlite3.connect('db/wirewolf.db')
+        curr = conn.cursor()
+
+        curr.execute(
+            """
+            UPDATE circuit_breaker
+            SET kapasitas_daya = {0}
+            WHERE id = {1}
+            """
+            .format(newPower, self.idCircuit)
+        )
+
+        curr.close()
+        conn.close()      
+
+    def deleteHouse(self):
+        conn = sqlite3.connect('db/wirewolf.db')
+        curr = conn.cursor()
+
+        curr.execute(
+            """
+            DELETE FROM rumah
+            WHERE id = {0}
+            """
+            .format(self.id)
+        )
+
+        curr.close()
+        conn.close()
+
+    
 
     
