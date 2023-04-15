@@ -120,7 +120,7 @@ class Room :
             """
             .format(self.id)
         )
-    def removeElectricity(self, id) :
+    def removeElectricity(self) :
         conn = sqlite3.connect('db/wirewolf.db')
         curr = conn.cursor()
         curr.execute(
@@ -128,7 +128,7 @@ class Room :
             DELETE FROM alat_listrik
             WHERE ruangan_id = {0}
             """
-            .format(id)
+            .format(self.id)
         )
     
 

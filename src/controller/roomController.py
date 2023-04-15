@@ -23,4 +23,10 @@ class RoomController:
             ambil.removeRoom()
         except:
             print("Gagal menghapus ruangan")
+    def removeElectricRoom(id):
+        try:
+            ambil = Room.Room.getRoomById(id)
+            ambil.removeElectricity()
+        except:
+            print("Gagal menghapus elektronik")
     
