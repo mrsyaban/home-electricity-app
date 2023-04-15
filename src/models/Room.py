@@ -104,3 +104,39 @@ class Room :
         data = curr.fetchone()
         return data
  
+    def removeRoom(self) :
+        conn = sqlite3.connect('db/wirewolf.db')
+        curr = conn.cursor()
+        curr.execute(
+            """
+            DELETE FROM alat_listrik
+            WHERE ruangan_id = {0}
+            """
+            .format(self.id)
+        )
+        curr.execute(
+            """
+            DELETE FROM circuit_breaker
+            WHERE id = {0}
+            """
+            .format(self.id_circuitBreaker)
+        )
+        curr.execute(
+            """
+            DELETE FROM ruangan
+            WHERE id = {0}
+            """
+            .format(self.id)
+        )
+    def removeElectricity(self) :
+        conn = sqlite3.connect('db/wirewolf.db')
+        curr = conn.cursor()
+        curr.execute(
+            """
+            DELETE FROM alat_listrik
+            WHERE ruangan_id = {0}
+            """
+            .format(self.id)
+        )
+    
+
