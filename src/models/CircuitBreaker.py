@@ -55,6 +55,9 @@ class CircuitBreaker:
     def getID(self):
         return self.__id
 
+    def getStatus(self):
+        return self.__status
+
     def setCapacity(self, kapasitasDaya):
         self.__kapasitasDaya = kapasitasDaya
         conn = sqlite3.connect('db/wireWolf.db')
