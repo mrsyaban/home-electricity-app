@@ -60,7 +60,7 @@ class Room :
         conn.commit()
         conn.close()
 
-    @staticmethod
+    
     def setRoom(self,Name:str, ID:int) :
         conn = sqlite3.connect('gui/wireWolf.db')
         curr = conn.cursor()
@@ -74,7 +74,7 @@ class Room :
             .format(Name, ID)
         )
 
-    @staticmethod
+    
     def addElectricity(self,nama:str, daya:int, voltase:int, waktu_penggunaan ) :
         conn = sqlite3.connect('gui/wireWolf.db')
         curr = conn.cursor()
@@ -87,7 +87,7 @@ class Room :
             .format(nama,self.id, daya, voltase, waktu_penggunaan)
         )
 
-    @staticmethod
+    
     def getRoomById(self,id:int) :
         conn = sqlite3.connect('gui/wireWolf.db')
         curr = conn.cursor()
@@ -103,7 +103,7 @@ class Room :
 
         data = curr.fetchone()
         return data
- 
+    
     def removeRoom(self) :
         conn = sqlite3.connect('db/wirewolf.db')
         curr = conn.cursor()
@@ -128,6 +128,7 @@ class Room :
             """
             .format(self.id)
         )
+    
     def removeElectricity(self) :
         conn = sqlite3.connect('db/wirewolf.db')
         curr = conn.cursor()
@@ -138,5 +139,19 @@ class Room :
             """
             .format(self.id)
         )
+    
+    def getElectricity(self) :
+        conn=sqlite3.connect('db/wirewolf.db')
+        curr=conn.cursor()
+        curr.execute(
+            """
+            SELECT *
+            FROM alat_listrik
+            WHERE ruangan_id = {0}
+            """
+            .format(self.id)
+        )
+        data=curr.fetchall()
+        return len(data)
     
 
