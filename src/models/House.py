@@ -8,35 +8,38 @@ class House :
         self.power:int = power
         self.idCircuit:int
 
-        conn = sqlite3.connect('db/wirewolf.db')
+        conn = sqlite3.connect('habibi.db')
         curr = conn.cursor()
         curr.execute(
             """
             INSERT INTO circuit_breaker(kapasitas_daya)
-            VALUE ({0})
+            VALUES ({0})
             """
             .format(power)
         )
+
+        conn.commit()
 
         curr.execute(
             """
             SELECT id 
             FROM circuit_breaker
-            ORDER BY id
+            ORDER BY id DESC
             LIMIT 1
             """
         )
 
-        circuitId = curr.fetchall()
+        circuitId = curr.fetchall()[0][0]
+        print(circuitId)
         
         curr.execute(
             """
             INSERT INTO rumah(nama, id_circuit)
-            VALUE ({0}, {1})
+            VALUES ('{0}', {1})
             """
             .format(name, circuitId)
         )
-
+        conn.commit()
         curr.close()
         conn.close()
 
@@ -44,7 +47,7 @@ class House :
     # CONSTRUCTOR BY ID
     @classmethod
     def getHouseById(cls, idHouse:int):
-        conn = sqlite3.connect('db/wirewolf.db')
+        conn = sqlite3.connect('habibi.db')
         curr = conn.cursor()
 
         curr.execute(
@@ -56,12 +59,12 @@ class House :
             .format(idHouse)
         )
         data = curr.fetchall()
-        houseId, houseName, housePower, circuitId = data
+        print(data)
+        houseId, houseName, circuitId = data[0]
 
         self = cls.__new__(cls)
         self.id = houseId 
         self.name = houseName
-        self.power = housePower
         self.idCircuit = circuitId
 
         curr.close()
@@ -70,23 +73,24 @@ class House :
         return self
 
     def editHouseName(self, newName:str):
-        conn = sqlite3.connect('db/wirewolf.db')
+        conn = sqlite3.connect('habibi.db')
         curr = conn.cursor()
 
         curr.execute(
             """
             UPDATE rumah
-            SET nama = {0}
+            SET nama = '{0}'
             WHERE id = {1}
             """
             .format(newName, self.id)
         )
-
+        
+        conn.commit()
         curr.close()
         conn.close()      
     
     def editPowerCap(self, newPower:int):
-        conn = sqlite3.connect('db/wirewolf.db')
+        conn = sqlite3.connect('habibi.db')
         curr = conn.cursor()
 
         curr.execute(
@@ -98,11 +102,12 @@ class House :
             .format(newPower, self.idCircuit)
         )
 
+        conn.commit()
         curr.close()
         conn.close()      
 
     def deleteHouse(self):
-        conn = sqlite3.connect('db/wirewolf.db')
+        conn = sqlite3.connect('habibi.db')
         curr = conn.cursor()
 
         curr.execute(
@@ -112,10 +117,7 @@ class House :
             """
             .format(self.id)
         )
-
+        
+        conn.commit()
         curr.close()
         conn.close()
-
-    
-
-    
