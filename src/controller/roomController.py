@@ -1,9 +1,9 @@
 import models.Room as Room
 import sqlite3
 class RoomController:
-    def add(nama : str,rumah_id : int, voltase : int, cnt_room : int, isSimulate : bool, id_circuitBreaker : int):
+    def addRoom(nama : str, rumah_id : int, voltase : int, isSimulate : bool):
         try:
-            Room.Room(nama,rumah_id, voltase, cnt_room, isSimulate, id_circuitBreaker)
+            Room.Room(nama,rumah_id,voltase,isSimulate)
         except:
             print("Gagal menambahkan ruangan")
     def ubahNamaRuangan(id,nama):
@@ -13,8 +13,7 @@ class RoomController:
             print("Gagal mengubah nama ruangan")
     def removeRoom(id):
         try:
-            ambil = Room.Room.getRoomById(id)
-            ambil.removeRoom()
+            Room.Room.removeRoom(id)
         except:
             print("Gagal menghapus ruangan")
     def getAllRoom(id):
