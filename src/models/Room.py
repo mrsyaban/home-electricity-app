@@ -1,27 +1,27 @@
 import sqlite3
 class Room :
-
-    # CONSTRUCTOR
-    def __init__(self, nama : str, rumah_id : int, voltase : int, cnt_room : int, isSimulate : bool, id_circuitBreaker : int) :
+    def __init__(self, nama : str, rumah_id : int, voltase : int, isSimulate : bool) :
         self.id:int
         self.nama : str = nama
         self.rumah_id : int = rumah_id
-        self.cnt_room : int = cnt_room
         self.isSimulate : bool = isSimulate
-        self.id_circuitBreaker : int = id_circuitBreaker
+        self.id_circuitBreaker : int 
 
-        conn = sqlite3.connect('db/wirewolf.db')
-        curr = conn.cursor()
+        conn = sqlite3.connect('gui/wireWolf.db')
+        addCircuitBreaker = conn.cursor()
 
-        curr.execute(
+        addCircuitBreaker.execute(
             """
             INSERT INTO circuit_breaker(kapasitas_daya) 
             VALUES ({0})
             """
             .format(voltase)
         )
+        addCircuitBreaker.close()
 
-        curr.execute(
+        
+        findIdCircuitBreaker=conn.cursor()
+        findIdCircuitBreaker.execute(
             """
             SELECT id
             FROM circuit_breaker
@@ -30,17 +30,22 @@ class Room :
             """
         )
 
-        circuitID=curr.fetchone()[0]
+        circuitID=findIdCircuitBreaker.fetchall()[0][0]
+        self.id_circuitBreaker=circuitID
+        findIdCircuitBreaker.close()
 
-        curr.execute(
+        addRoom=conn.cursor()
+        addRoom.execute(
             """
-            INSERT INTO  Ruangan(nama, rumah_id, id_circuit)
+            INSERT INTO  ruangan(nama, rumah_id, id_circuit)
             VALUES ('{0}', {1}, {2})
             """
             .format(nama, rumah_id, circuitID)
         )
+        addRoom.close()
 
-        curr.execute(
+        findIdRoom=conn.cursor()
+        findIdRoom.execute(
             """
             SELECT id
             FROM ruangan
@@ -48,16 +53,16 @@ class Room :
             LIMIT 1
             """
         )
-
-        self.id=curr.fetchone()[0]
-
-        curr.close()
+        self.id=findIdRoom.fetchall()[0][0]
+        findIdRoom.close()
+    
+        
         conn.commit()
         conn.close()
 
     
-    def setRoom(Name:str, ID:int) :
-        conn = sqlite3.connect('db/wirewolf.db')
+    def setRoom(self,Name:str, ID:int) :
+        conn = sqlite3.connect('gui/wireWolf.db')
         curr = conn.cursor()
 
         curr.execute(
@@ -68,9 +73,10 @@ class Room :
             """
             .format(Name, ID)
         )
+
     
     def addElectricity(self,nama:str, daya:int, voltase:int, waktu_penggunaan ) :
-        conn = sqlite3.connect('db/wirewolf.db')
+        conn = sqlite3.connect('gui/wireWolf.db')
         curr = conn.cursor()
 
         curr.execute(
@@ -80,9 +86,10 @@ class Room :
             """
             .format(nama,self.id, daya, voltase, waktu_penggunaan)
         )
+
     
-    def getRoomById(id:int) :
-        conn = sqlite3.connect('db/wirewolf.db')
+    def getRoomById(self,id:int) :
+        conn = sqlite3.connect('gui/wireWolf.db')
         curr = conn.cursor()
 
         curr.execute(
@@ -95,7 +102,8 @@ class Room :
         )
 
         data = curr.fetchone()
-        return Room(data[1], data[2], data[3], data[4], data[5], data[6])
+        return data
+    
     def removeRoom(self) :
         conn = sqlite3.connect('db/wirewolf.db')
         curr = conn.cursor()
@@ -120,6 +128,7 @@ class Room :
             """
             .format(self.id)
         )
+    
     def removeElectricity(self) :
         conn = sqlite3.connect('db/wirewolf.db')
         curr = conn.cursor()
@@ -130,5 +139,19 @@ class Room :
             """
             .format(self.id)
         )
+    
+    def getElectricity(self) :
+        conn=sqlite3.connect('db/wirewolf.db')
+        curr=conn.cursor()
+        curr.execute(
+            """
+            SELECT *
+            FROM alat_listrik
+            WHERE ruangan_id = {0}
+            """
+            .format(self.id)
+        )
+        data=curr.fetchall()
+        return len(data)
     
 
