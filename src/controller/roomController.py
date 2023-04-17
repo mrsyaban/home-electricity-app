@@ -1,9 +1,9 @@
 import models.Room as Room
-
+import sqlite3
 class RoomController:
-    def add(nama : str,rumah_id : int, voltase : int, cnt_room : int, isSimulate : bool, id_circuitBreaker : int):
+    def addRoom(nama : str, rumah_id : int, voltase : int, isSimulate : bool):
         try:
-            Room.Room(nama,rumah_id, voltase, cnt_room, isSimulate, id_circuitBreaker)
+            Room.Room(nama,rumah_id,voltase,isSimulate)
         except:
             print("Gagal menambahkan ruangan")
     def ubahNamaRuangan(id,nama):
@@ -11,22 +11,25 @@ class RoomController:
             Room.Room.setRoom(nama,id)
         except:
             print("Gagal mengubah nama ruangan")
-    def addElectricRoom(nama:str, daya:int, voltase:int, waktu_penggunaan,id:int ):
-        try:
-            ubah = Room.Room.getRoomById(id)
-            ubah.addElectricity(nama,daya,voltase,waktu_penggunaan)
-        except:
-            print("Gagal menambahkan elektronik")
     def removeRoom(id):
         try:
-            ambil = Room.Room.getRoomById(id)
-            ambil.removeRoom()
+            Room.Room.removeRoom(id)
         except:
             print("Gagal menghapus ruangan")
-    def removeElectricRoom(id):
-        try:
-            ambil = Room.Room.getRoomById(id)
-            ambil.removeElectricity()
-        except:
-            print("Gagal menghapus elektronik")
+    def getAllRoom(id):
+        conn = sqlite3.connect('db/wirewolf.db')
+        curr = conn.cursor()
+        curr.execute(
+            """
+            SELECT id FROM ruangan WHERE id_rumah = {0}
+            """
+            .format(id)
+        )
+        ans = curr.fetchall()
+        curr.close()
+        conn.close()
+        simpan = []
+        for i in ans:
+            simpan.append(i[0])
+        return simpan
     
