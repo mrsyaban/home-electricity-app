@@ -36,8 +36,11 @@ class HouseController:
             """
         )
         ans = curr.fetchall()
+        simpan = []
+        for i in range(len(ans)):
+            simpan.append(ans[i][0])
         curr.close()
         conn.close()
-        return ans
+        return simpan
 
     
