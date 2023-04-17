@@ -32,9 +32,8 @@ class HouseController:
 
         curr.execute(
             """
-            SELECT * FROM rumah
+            SELECT id FROM rumah
             """
-            .format(self.id)
         )
         ans = curr.fetchall()
         curr.close()
