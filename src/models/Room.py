@@ -102,7 +102,23 @@ class Room :
         )
 
         data = curr.fetchone()
-        return data
+        return data#kalo ini cuma list nya doang
+        #--------------------------------------
+        #-------------kaya gini ngga si--------
+        #--------------------------------------
+        # data = curr.fetchall()
+        # if len(data) == 0 :
+        #     return None
+        # nama = data[1]
+        # rumah_id = data[2]
+        # id_circuit = data[3]
+
+        # self = cls.__new__(cls)
+        # self.id = id
+        # self.nama = nama
+        # self.rumah_id = rumah_id
+        # self.id_circuit = id_circuit
+        # return self
     
     def removeRoom(self) :
         conn = sqlite3.connect('db/wirewolf.db')
