@@ -1,10 +1,11 @@
-import models.Electronic as Electronic
+
+from models.Electronic import Electronic
 import sqlite3
 
 class ElectronicController:
     def addElectricRoom(id_ruangan: int, nama : str, daya : int, voltase : int, waktu : int, detail : str, isOn : bool = True):
         try:
-            Electronic.Electronic(nama, daya, voltase, waktu, detail, isOn, id_ruangan)
+            Electronic.Electronic(id_ruangan, nama, daya, voltase, waktu, detail, isOn)
         except:
             print("Gagal menambahkan elektronik")
     def removeElectricRoom(id):
@@ -60,4 +61,7 @@ class ElectronicController:
         ans = curr.fetchall()
         curr.close()
         conn.close()
-        return ans
+        simpanid = []
+        for i in range(len(ans)):
+            simpanid.append(ans[i][0])
+        return simpanid

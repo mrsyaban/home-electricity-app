@@ -28,5 +28,8 @@ class RoomController:
         ans = curr.fetchall()
         curr.close()
         conn.close()
-        return ans
+        simpan = []
+        for i in ans:
+            simpan.append(i[0])
+        return simpan
     
