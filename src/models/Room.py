@@ -38,7 +38,7 @@ class Room :
         addRoom=conn.cursor()
         addRoom.execute(
             """
-            INSERT INTO  ruangan(nama, rumah_id, id_circuit)
+            INSERT INTO  ruangan(nama, id_rumah, id_circuit)
             VALUES ('{0}', {1}, {2})
             """
             .format(nama, rumah_id, circuitID)
@@ -68,14 +68,13 @@ class Room :
         curr.execute(
             """
             SELECT *
-            FROM Ruangan
+            FROM ruangan
             WHERE id = {0}
             """
             .format(id)
         )
 
         data = curr.fetchall()
-
         findPower=conn.cursor()
         findPower.execute(
             """
@@ -112,7 +111,7 @@ class Room :
             """
             .format(Name, self.id)
         )
-
+        self.nama=Name
         curr.close()
         conn.commit()
         conn.close()
@@ -129,7 +128,7 @@ class Room :
             """
             .format(newPower, self.id_circuitBreaker)
         )
-
+        self.power=newPower
         curr.close()
         conn.commit()
         conn.close()
@@ -145,6 +144,12 @@ class Room :
             """
             .format(self.id)
         )
+        self.id=0
+        self.nama="Deleted"
+        self.rumah_id=0
+        self.isSimulate=False
+        self.id_circuitBreaker=0
+        self.power=0
 
         curr.close()
         conn.commit()
@@ -153,21 +158,25 @@ class Room :
     def getAllElectricityID(self) :
         conn = sqlite3.connect('db/wireWolf.db')
         curr = conn.cursor()
-
         curr.execute(
             """
             SELECT id
-            FROM listrik
-            WHERE id_ruangan = {0}
+            FROM alat_listrik
+            WHERE ruangan_id = {0}
             """
             .format(self.id)
         )
 
         data = curr.fetchall()
 
+        result=[]
+
+        for i in data :
+            result.append(i[0])
+
         curr.close()
         conn.close()
-        return data
+        return result
     
     def getManyElectricity(self):
         conn=sqlite3.connect('db/wireWolf.db')
@@ -176,8 +185,8 @@ class Room :
         curr.execute(
             """
             SELECT *
-            FROM listrik
-            WHERE id_ruangan = {0}
+            FROM alat_listrik
+            WHERE ruangan_id = {0}
             """
             .format(self.id)
         )
@@ -186,5 +195,3 @@ class Room :
 
         return len(data)
 
-
-    
