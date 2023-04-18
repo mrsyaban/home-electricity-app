@@ -1,13 +1,14 @@
 import sqlite3
 class Room :
-    def __init__(self, nama : str, rumah_id : int, voltase : int, isSimulate : bool) :
+    def __init__(self, nama : str, rumah_id : int, power : int, isSimulate : bool) :
         self.id:int
         self.nama : str = nama
         self.rumah_id : int = rumah_id
         self.isSimulate : bool = isSimulate
         self.id_circuitBreaker : int 
-
-        conn = sqlite3.connect('gui/wireWolf.db')
+        self.power:int = power
+        
+        conn = sqlite3.connect('db/wireWolf.db')
         addCircuitBreaker = conn.cursor()
 
         addCircuitBreaker.execute(
@@ -15,7 +16,7 @@ class Room :
             INSERT INTO circuit_breaker(kapasitas_daya) 
             VALUES ({0})
             """
-            .format(voltase)
+            .format(power)
         )
         addCircuitBreaker.close()
 
@@ -25,7 +26,7 @@ class Room :
             """
             SELECT id
             FROM circuit_breaker
-            ORDER BY id 
+            ORDER BY id DESC
             LIMIT 1
             """
         )
@@ -37,7 +38,7 @@ class Room :
         addRoom=conn.cursor()
         addRoom.execute(
             """
-            INSERT INTO  ruangan(nama, rumah_id, id_circuit)
+            INSERT INTO  ruangan(nama, id_rumah, id_circuit)
             VALUES ('{0}', {1}, {2})
             """
             .format(nama, rumah_id, circuitID)
@@ -49,7 +50,7 @@ class Room :
             """
             SELECT id
             FROM ruangan
-            ORDER BY id 
+            ORDER BY id DESC
             LIMIT 1
             """
         )
@@ -59,10 +60,47 @@ class Room :
         
         conn.commit()
         conn.close()
+    @classmethod
+    def getRoomById(cls,id:int) :
+        conn = sqlite3.connect('db/wireWolf.db')
+        curr = conn.cursor()
 
+        curr.execute(
+            """
+            SELECT *
+            FROM ruangan
+            WHERE id = {0}
+            """
+            .format(id)
+        )
+
+        data = curr.fetchall()
+        findPower=conn.cursor()
+        findPower.execute(
+            """
+            SELECT kapasitas_daya
+            FROM circuit_breaker
+            WHERE id = {0}
+            """
+            .format(data[0][3])
+        )
+
+        self=cls.__new__(cls)
+        self.id:int=data[0][0]
+        self.nama : str = data[0][1]
+        self.rumah_id : int = data[0][2]
+        self.isSimulate : bool = False #default
+        self.id_circuitBreaker : int = data[0][3]
+        self.power:int = findPower.fetchall()[0][0]
+
+        findPower.close()
+        curr.close()
+        conn.close()
+
+        return self
     
-    def setRoom(self,Name:str, ID:int) :
-        conn = sqlite3.connect('gui/wireWolf.db')
+    def editRoomName(self,Name:str) :
+        conn = sqlite3.connect('db/wireWolf.db')
         curr = conn.cursor()
 
         curr.execute(
@@ -71,78 +109,79 @@ class Room :
             SET nama = '{0}'
             WHERE id = {1}
             """
-            .format(Name, ID)
+            .format(Name, self.id)
         )
-
+        self.nama=Name
+        curr.close()
+        conn.commit()
+        conn.close()
     
-    def addElectricity(self,nama:str, daya:int, voltase:int, waktu_penggunaan ) :
-        conn = sqlite3.connect('gui/wireWolf.db')
+    def editPowerCap(self,newPower:int) :
+        conn = sqlite3.connect('db/wireWolf.db')
         curr = conn.cursor()
 
         curr.execute(
             """
-            INSERT INTO  alat_listrik(nama, ruangan_id, daya, voltase, waktu_penggunaan)
-            VALUES ('{0}', {1}, {2}, {3}, {4})
+            UPDATE circuit_breaker
+            SET kapasitas_daya = {0}
+            WHERE id = {1}
             """
-            .format(nama,self.id, daya, voltase, waktu_penggunaan)
+            .format(newPower, self.id_circuitBreaker)
         )
-
+        self.power=newPower
+        curr.close()
+        conn.commit()
+        conn.close()
     
-    def getRoomById(self,id:int) :
-        conn = sqlite3.connect('gui/wireWolf.db')
+    def deleteRoom(self) :
+        conn = sqlite3.connect('db/wireWolf.db')
         curr = conn.cursor()
 
         curr.execute(
             """
-            SELECT *
-            FROM Ruangan
+            DELETE FROM Ruangan
             WHERE id = {0}
             """
-            .format(id)
+            .format(self.id)
         )
+        self.id=0
+        self.nama="Deleted"
+        self.rumah_id=0
+        self.isSimulate=False
+        self.id_circuitBreaker=0
+        self.power=0
 
-        data = curr.fetchone()
-        return data
+        curr.close()
+        conn.commit()
+        conn.close()
     
-    def removeRoom(self) :
-        conn = sqlite3.connect('db/wirewolf.db')
+    def getAllElectricityID(self) :
+        conn = sqlite3.connect('db/wireWolf.db')
         curr = conn.cursor()
         curr.execute(
             """
-            DELETE FROM alat_listrik
+            SELECT id
+            FROM alat_listrik
             WHERE ruangan_id = {0}
             """
             .format(self.id)
         )
-        curr.execute(
-            """
-            DELETE FROM circuit_breaker
-            WHERE id = {0}
-            """
-            .format(self.id_circuitBreaker)
-        )
-        curr.execute(
-            """
-            DELETE FROM ruangan
-            WHERE id = {0}
-            """
-            .format(self.id)
-        )
+
+        data = curr.fetchall()
+
+        result=[]
+
+        for i in data :
+            result.append(i[0])
+
+        curr.close()
+        conn.close()
+        return result
     
-    def removeElectricity(self) :
-        conn = sqlite3.connect('db/wirewolf.db')
-        curr = conn.cursor()
-        curr.execute(
-            """
-            DELETE FROM alat_listrik
-            WHERE ruangan_id = {0}
-            """
-            .format(self.id)
-        )
-    
-    def getElectricity(self) :
-        conn=sqlite3.connect('db/wirewolf.db')
+    def getManyElectricity(self):
+        conn=sqlite3.connect('db/wireWolf.db')
         curr=conn.cursor()
+
         curr.execute(
             """
             SELECT *
@@ -151,7 +190,8 @@ class Room :
             """
             .format(self.id)
         )
+
         data=curr.fetchall()
+
         return len(data)
-    
 
