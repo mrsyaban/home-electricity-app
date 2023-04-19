@@ -10,7 +10,7 @@ class MainWindow(QStackedWidget):
         self.initUI()
 
     def initUI(self):
-        self.resize(800, 600)
+        self.resize(1344, 756)
         self.setWindowTitle("Wire Wolf")
         self.setStyleSheet("background-color: #98ABC8;")
         self.addWidget(self.mainPage)
