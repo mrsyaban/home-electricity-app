@@ -3,8 +3,9 @@ from controller.houseController import HouseController
 from models.House import House
 from PyQt5 import QtCore, QtGui, QtWidgets
 class AddHouseDialog(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent):
         super().__init__(parent)
+        self.parent = parent
         self.setWindowTitle("My Dialog")
         self.setupUi()
 
@@ -72,6 +73,7 @@ class AddHouseDialog(QDialog):
 "}")
         self.lineEdit_2.setPlaceholderText("")
         self.lineEdit_2.setObjectName("lineEdit_2")
+        self.lineEdit_2.setValidator(QtGui.QDoubleValidator(0, 10000, 0, self))
         self.verticalLayout_3.addWidget(self.lineEdit_2)
         self.verticalLayout_2.addWidget(self.frame_3, 0, QtCore.Qt.AlignTop)
         self.frame_2 = QtWidgets.QFrame(self)
@@ -116,4 +118,5 @@ class AddHouseDialog(QDialog):
         power = self.lineEdit_2.text()
         hasil = int(power)
         x = House(name, hasil)
+        self.parent.reload()
         self.accept()
