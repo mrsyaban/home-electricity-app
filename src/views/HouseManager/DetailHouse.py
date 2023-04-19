@@ -3,7 +3,7 @@ from views.HouseManager.BackButton import BackButton
 from views.HouseManager.Labels.CntRoomLabel import CntRoomLabel
 from views.HouseManager.Labels.PowHouseLabel import PowHouseLabel
 from views.HouseManager.Labels.ConsumeLabel import ConsumeLabel
-from controller.houseController import *
+from models.House import *
 from models.CircuitBreaker import *
 from PyQt5 import QtCore, QtGui
 # from views.Button.TextButton import TextButton

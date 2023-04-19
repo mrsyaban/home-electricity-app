@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QFrame, QAbstractScrollArea, QWidget, QStackedWidget, QSizePolicy,QLabel, QHBoxLayout, QScrollArea, QVBoxLayout
 from views.HouseManager.ListRoom import ListRoom
 from views.HouseManager.DetailHouse import DetailHouse
-from views.HouseManager.DetailRoom import DetailRoom
+# from views.HouseManager.DetailRoom import DetailRoom
 from PyQt5 import QtCore
 
 class HousePage(QWidget):
@@ -16,7 +16,7 @@ class HousePage(QWidget):
     def initUI(self):
         self.layout: QHBoxLayout = QHBoxLayout()
         self.detailHouse = DetailHouse(self.parent, self.id, self.grandPa, False)
-        self.detailRoom: DetailRoom = DetailRoom(self, self.idRoom, False)
+        # self.detailRoom: DetailRoom = DetailRoom(self, self.idRoom, False)
 
         self.roomSpace = QWidget(self.parent)
         self.roomSpace.setEnabled(False)
@@ -106,7 +106,7 @@ class HousePage(QWidget):
         self.verticalLayout_3 = QVBoxLayout(self.detailRoomSpace)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
 
-        self.verticalLayout_3.addWidget(self.detailRoom)
+        # self.verticalLayout_3.addWidget(self.detailRoom)
         self.horizontalLayout_3.addWidget(self.detailRoomSpace)
         self.layout.addWidget(self.roomSpace)
 

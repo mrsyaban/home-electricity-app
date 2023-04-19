@@ -89,7 +89,10 @@ class Room :
             """
             .format(data[0][3])
         )
-        self.powerCap:int = findPower.fetchall()[0][1]
+        data = findPower.fetchall()
+        print(data)
+        if(len(data)>0):
+            self.powerCap:int = data[0][1]
 
         findPower.close()
         curr.close()
