@@ -8,7 +8,7 @@ class House :
         self.power:int = power
         self.idCircuit:int
 
-        conn = sqlite3.connect('habibi.db')
+        conn = sqlite3.connect('db/wireWolf.db')
         curr = conn.cursor()
         curr.execute(
             """
@@ -30,8 +30,6 @@ class House :
         )
 
         circuitId = curr.fetchall()[0][0]
-        print(circuitId)
-        
         curr.execute(
             """
             INSERT INTO rumah(nama, id_circuit)
@@ -47,7 +45,7 @@ class House :
     # CONSTRUCTOR BY ID
     @classmethod
     def getHouseById(cls, idHouse:int):
-        conn = sqlite3.connect('habibi.db')
+        conn = sqlite3.connect('db/wireWolf.db')
         curr = conn.cursor()
 
         curr.execute(
@@ -59,13 +57,16 @@ class House :
             .format(idHouse)
         )
         data = curr.fetchall()
-        print(data)
-        houseId, houseName, circuitId = data[0]
-
         self = cls.__new__(cls)
-        self.id = houseId 
-        self.name = houseName
-        self.idCircuit = circuitId
+        if(len(data) > 0):
+            houseId, houseName, circuitId = data[0]
+            self.id = houseId 
+            self.name = houseName
+            self.idCircuit = circuitId
+        else:
+            self.id = ""
+            self.name = ""
+            self.idCircuit = ""
 
         curr.close()
         conn.close()      
@@ -73,7 +74,7 @@ class House :
         return self
 
     def editHouseName(self, newName:str):
-        conn = sqlite3.connect('habibi.db')
+        conn = sqlite3.connect('db/wireWolf.db')
         curr = conn.cursor()
 
         curr.execute(
@@ -90,7 +91,7 @@ class House :
         conn.close()      
     
     def editPowerCap(self, newPower:int):
-        conn = sqlite3.connect('habibi.db')
+        conn = sqlite3.connect('db/wireWolf.db')
         curr = conn.cursor()
 
         curr.execute(
@@ -107,7 +108,7 @@ class House :
         conn.close()      
 
     def deleteHouse(self):
-        conn = sqlite3.connect('habibi.db')
+        conn = sqlite3.connect('db/wireWolf.db')
         curr = conn.cursor()
 
         curr.execute(
@@ -121,3 +122,24 @@ class House :
         conn.commit()
         curr.close()
         conn.close()
+
+    def getAllRoom(self):
+        conn = sqlite3.connect('db/wireWolf.db')
+        curr = conn.cursor()
+
+        curr.execute(
+            """
+            SELECT *
+            FROM ruangan
+            WHERE id_rumah = {0}
+            """
+            .format(self.id)
+        )
+
+        data = curr.fetchall()
+        
+        conn.commit()
+        curr.close()
+        conn.close()
+
+        return data

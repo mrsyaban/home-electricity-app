@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QPushButton, QHBoxLayout
-from views.HouseManager.Dialog.AddRoomDialog import *
+# from views.HouseManager.Dialog.AddRoomDialog import *
 
 class CntRoomLabel(QWidget):
     def __init__(self, cntRoom: int, idHouse: str, mode: bool):
@@ -23,11 +23,11 @@ class CntRoomLabel(QWidget):
         self.layout.addWidget(self.widgetLabel)
         if(not self.mode):
             self.addRoomButton = QPushButton("+")
-            self.addRoomButton.clicked.connect(self.handleClick)
+            # self.addRoomButton.clicked.connect(self.handleClick)
             self.layout.addWidget(self.addRoomButton)
 
         self.setLayout(self.layout)
 
-    def handleClick(self):
-        addRoomDialog = AddRoomDialog(self.idHouse)
-        addRoomDialog.exec_()
+    # def handleClick(self):
+    #     addRoomDialog = AddRoomDialog(self.idHouse)
+    #     addRoomDialog.exec_()

@@ -8,14 +8,14 @@ class CircuitBreaker:
         c = conn.cursor()
         c.execute(
             """
-            Insert into CircuitBreaker (kapasitas_day) values ({0})
+            Insert into circuit_breaker (kapasitas_day) values ({0})
             """.format(kapasitasDaya)
         )
 
         c.execute(
             """
             SELECT id 
-            FROM CircuitBreaker 
+            FROM circuit_breaker 
             ORDER BY id DESC 
             LIMIT 1
             """
@@ -32,17 +32,21 @@ class CircuitBreaker:
         curr.execute(
             """
                 SELECT * 
-                FROM CircuitBreaker
+                FROM circuit_breaker
                 WHERE id={0}
             """
             .format(circuitBreakerID)
         )
         data = curr.fetchall()
-        circuitBreakerID, kapasitasDaya = data
-
         self = cls.__new__(cls)
-        self.__id = circuitBreakerID
-        self.__kapasitasDaya = kapasitasDaya
+        if(len(data)>0):
+            circuitBreakerID, kapasitasDaya = data[0]
+
+            self.__id = circuitBreakerID
+            self.__kapasitasDaya = kapasitasDaya
+        else:
+            self.__id = ""
+            self.__kapasitasDaya = 0
 
         curr.close()
         conn.close()      
@@ -64,7 +68,7 @@ class CircuitBreaker:
         c = conn.cursor()
         c.execute(
             """
-            UPDATE CircuitBreaker SET kapasitas_day = {0}
+            UPDATE circuit_breaker SET kapasitas_day = {0}
             WHERE id = {1}
             """.format(kapasitasDaya, self.__id)
         )
