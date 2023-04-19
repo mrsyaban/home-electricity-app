@@ -132,12 +132,12 @@ class RoomItem(QWidget):
         self.verticalLayout_5.addWidget(self.deletButton_2, 0, QtCore.Qt.AlignRight)
 
         self.retranslateUi(Form)
-        if(self.mode):
-            self.indicator = QLabel("mati")
-            self.layout.addWidget(self.indicator)
-        else:
-            self.delButton = QPushButton("del")
-            self.layout.addWidget(self.delButton)
+        # if(self.mode):
+        #     self.indicator = QLabel("mati")
+        #     self.layout.addWidget(self.indicator)
+        # else:
+        #     self.delButton = QPushButton("del")
+        #     self.layout.addWidget(self.delButton)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
