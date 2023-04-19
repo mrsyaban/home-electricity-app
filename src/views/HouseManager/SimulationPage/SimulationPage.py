@@ -46,10 +46,12 @@ class SimulationPage(QWidget):
         self.layout.setStretch(2, 1)
 
     def reloadUI(self):
+        newDetailHouse = DetailHouse(self.parent, self.id, self.grandPa, True)
         newListRoom = ListRoom(self, self.id, True, self.parent)
         newDetailRoom = DetailRoom(self, self.idRoom, True, self.parent)
         newScroll = QScrollArea()
 
+        self.detailHouse.deleteLater()
         self.scrollArea_2.deleteLater()
         self.detailRoom.deleteLater()
 
@@ -59,9 +61,11 @@ class SimulationPage(QWidget):
 
         self.scrollArea_2 = newScroll
 
+        self.detailHouse = newDetailHouse
         self.listRoom = newListRoom
         self.detailRoom = newDetailRoom
 
+        self.layout.addWidget(self.detailHouse)
         self.layout.addWidget(self.scrollArea_2)
         self.layout.addWidget(self.detailRoom)
         self.layout.setStretch(0, 1)
