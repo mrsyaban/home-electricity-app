@@ -55,7 +55,6 @@ class MainPage(QWidget):
         self.addButton = QPushButton()
         self.addButton.setStyleSheet( "QPushButton { background-color: rgba(0,0,0,0); border-radius:12px}\n"
                             "QPushButton::hover  { background-color: #999999;}\n")
-        # self.addButton.setStyleSheet("background-color: rgba(0,0,0,0);")
         plusIcon = QIcon(f"{getDirPath()}/src/assets/Plus.png")
         plusSize = plusIcon.actualSize(QSize(50, 50))
         self.addButton.setIcon(plusIcon)
