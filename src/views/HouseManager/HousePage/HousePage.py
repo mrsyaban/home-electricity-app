@@ -15,6 +15,7 @@ class HousePage(QWidget):
 
     def initUI(self):
         self.layout: QHBoxLayout = QHBoxLayout()
+        self.layout.setContentsMargins(0, 0, 0, 0)
         self.detailHouse = DetailHouse(self.parent, self.id, self.grandPa, False)
         # self.detailRoom: DetailRoom = DetailRoom(self, self.idRoom, False)
 
