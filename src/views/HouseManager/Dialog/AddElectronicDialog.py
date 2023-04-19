@@ -1,11 +1,13 @@
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QDoubleValidator
+from models.Electronic import *
 
 class AddElectronicDialog(QDialog):
-    def __init__(self, idRoom):
+    def __init__(self, idRoom, grandPa1):
         super().__init__()
         self.idRoom = idRoom
+        self.grandPa1 = grandPa1
         self.setWindowTitle("Add Electronic")
         self.setObjectName("Dialog")
         self.resize(500, 450)
@@ -156,11 +158,13 @@ class AddElectronicDialog(QDialog):
 
     def handle_submit(self):
         nama = self.lineEdit.text()
-        daya = float(self.lineEdit_2.text())
-        voltase = float(self.lineEdit_3.text())
-        waktu = float(self.lineEdit_3.text())
+        daya = int(self.lineEdit_2.text())
+        voltase = int(self.lineEdit_3.text())
+        waktu = int(self.lineEdit_4.text())
 
+        Electronic(self.idRoom, nama, daya, voltase, waktu)
 
+        self.grandPa1.reload()
         self.accept()
     
     def retranslateUi(self, Dialog):

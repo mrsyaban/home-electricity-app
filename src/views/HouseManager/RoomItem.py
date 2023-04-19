@@ -13,6 +13,8 @@ class RoomItem(QWidget):
         self.grandPa = grandPa
         self.mode = mode
         self.grandPa1 = grandPa1
+        self.isOn = False
+        self.changeIsOn()
         self.setupUi(self)
 
     def setupUi(self, Form):
@@ -93,9 +95,12 @@ class RoomItem(QWidget):
         self.verticalLayout_5.addWidget(self.powerCap_2)
 
         self.retranslateUi(Form)
+
         if(self.mode):
             self.indicator = QLabel("mati")
-            self.layout.addWidget(self.indicator)
+            if(self.isOn):
+                self.indicator.setText("hidup")
+            self.verticalLayout_5.addWidget(self.indicator)
         else:
             self.deletButton_2 = QtWidgets.QPushButton(self.widget)
             self.deletButton_2.setMinimumSize(QtCore.QSize(25, 25))
@@ -125,3 +130,15 @@ class RoomItem(QWidget):
         room = Room.getRoomById(self.id)
         room.removeRoom()
         self.grandPa1.reload()
+
+    def changeIsOn(self):
+        if(self.mode):
+            tmpPower = 0
+            room = Room.getRoomById(self.id)
+            listEl = room.getElectricity()
+            for i in range(len(listEl)):
+                if(self.grandPa1.elsState[self.id][i]):
+                    tmpPower += listEl[i][2]
+
+            if(tmpPower>self.powerCap):
+                self.isOn = True
