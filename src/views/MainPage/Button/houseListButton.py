@@ -12,7 +12,7 @@ class HouseButton(QPushButton):
         self.setIconSize(QSize(16, 16))
         # self.setFixedWidth(100)
         self.setStyleSheet( "QPushButton { text-align: left; padding-left: 20px; background-color: #D9D9D9;\n"
-                            "font: 75 8pt \"MS Shell Dlg 2\";\n"
+                            "font: 75 12pt \"MS Shell Dlg 2\";\n"
                             "border-radius: 20px;\n"
                             "padding: 5px;\n"
                             "padding-left: 15px;\n"

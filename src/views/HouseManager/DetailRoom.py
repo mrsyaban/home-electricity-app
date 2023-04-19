@@ -36,13 +36,17 @@ class DetailRoom(QWidget):
                 'background-color: transparent; border-style: none;')
             font = QFont()
             font.setPointSize(20)
+            font.setBold(True)
             self.roomTitle.setFont(font)
 
             roomPowerCap = self.room.powerCap
             self.roomCap = QPushButton(self.titleHolds)
-            self.roomCap.setText(str(roomPowerCap))  # input roomcap
+            self.roomCap.setText(str(roomPowerCap) + " Watt")  # input roomcap
             self.roomCap.setStyleSheet(
                 'background-color: transparent; border-style: none;')
+            capFont = QFont()
+            capFont.setPointSize(13)
+            self.roomCap.setFont(capFont)
 
             self.titleLayout.addWidget(self.roomTitle)
             self.titleLayout.addWidget(self.roomCap)
@@ -108,12 +112,12 @@ class DetailRoom(QWidget):
                 self.addElec.setText("+")
                 self.addElec.setMinimumSize(QtCore.QSize(0, 40))
                 self.addElec.setStyleSheet("QPushButton {background-color: #D9D9D9;\n"
-                                        "font: 75 8pt \"MS Shell Dlg 2\";\n"
+                                        "font: 150 17pt \"MS Shell Dlg 2\";\n"
                                         "border-radius: 20px;\n"
                                             "padding: 5px;\n"
                                         "padding-left: 15px;\n"
                                             "padding-right: 15px;}\n"
-                                            "QPushButton::hover { background-color: #565656;}\n")
+                                            "QPushButton::hover { background-color: #999999;}\n")
 
                 self.bodyLayout.addWidget(self.addElec)
 

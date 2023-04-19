@@ -14,11 +14,11 @@ class HouseItem(QWidget):
         self.initUI()
 
     def initUI(self):
+
         self.layout = QHBoxLayout()
 
         # houseName
         self.houseButton = HouseButton(self.nama, f"{getDirPath()}/src/assets/right.png")
-        self.houseButton.setObjectName("houseButton")
 
         #delete Button
         self.delButton = QPushButton()
