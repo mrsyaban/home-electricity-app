@@ -1,10 +1,10 @@
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QPushButton,QApplication
 from PyQt5.QtCore import Qt
 from PyQt5 import QtCore, QtGui, QtWidgets
-import sys
+from models.Room import *
 
 class RoomItem(QWidget):
-    def __init__(self, id: str, name: str, cntEl: int, powerCap: int, grandPa: QWidget, mode: bool):
+    def __init__(self, id: str, name: str, cntEl: int, powerCap: int, grandPa: QWidget, mode: bool, grandPa1):
         super().__init__()
         self.id = id
         self.name = name
@@ -12,6 +12,7 @@ class RoomItem(QWidget):
         self.powerCap = powerCap
         self.grandPa = grandPa
         self.mode = mode
+        self.grandPa1 = grandPa1
         # self.initUI()
         self.setupUi(self)
 
@@ -52,7 +53,7 @@ class RoomItem(QWidget):
         Form.setObjectName("Form")
         Form.resize(322, 415)
         self.widget = QtWidgets.QWidget(Form)
-        self.widget.setGeometry(QtCore.QRect(10, 10, 300, 400))
+        self.widget.setGeometry(QtCore.QRect(10, 10, 200, 300))
         self.widget.setStyleSheet("background-color: \'#FEF7F7\';")
         self.widget.setObjectName("widget")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.widget)
@@ -155,4 +156,6 @@ class RoomItem(QWidget):
             self.grandPa.setIdRoom(self.id)
 
     def handleClickDel(self):
-        print("ce")
+        room = Room.getRoomById(self.id)
+        room.removeRoom()
+        self.grandPa1.reload()
