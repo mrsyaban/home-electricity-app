@@ -117,6 +117,7 @@ class AddHouseDialog(QDialog):
         name = self.lineEdit.text()
         power = self.lineEdit_2.text()
         hasil = int(power)
+        
         x = House(name, hasil)
         self.parent.reload()
         self.accept()

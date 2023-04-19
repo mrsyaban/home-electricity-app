@@ -25,6 +25,9 @@ class HouseManager(QStackedWidget):
         self.isSimulate = not self.isSimulate
         if(self.isSimulate):
             self.createState()
+            self.removeWidget(self.simulationPage)
+            self.simulationPage = SimulationPage(self, self.id, self.parent)
+            self.addWidget(self.simulationPage)
             self.setCurrentWidget(self.simulationPage)
         else:
             self.setCurrentWidget(self.housePage)
