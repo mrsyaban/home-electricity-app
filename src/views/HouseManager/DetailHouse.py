@@ -8,6 +8,7 @@ from models.CircuitBreaker import *
 from PyQt5 import QtCore, QtGui
 from views.HouseManager.Dialog.AddRoomDialog import *
 from models.Room import Room
+from utils.getDirPath import *
 
 
 class DetailHouse(QWidget):
@@ -54,11 +55,11 @@ class DetailHouse(QWidget):
         self.backButton = BackButton(self.grandPa1)
         self.backButton.setObjectName("backButton")
         self.horizontalLayout_4.addWidget(self.backButton)
-        self.houseName = QPushButton(self.houseTitle)
+        self.houseName = QLabel(self.houseTitle)
         self.houseName.setMinimumSize(QtCore.QSize(60, 15))
         self.houseName.setMaximumSize(QtCore.QSize(100, 25))
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(20)
         font.setBold(True)
         font.setWeight(75)
         self.houseName.setFont(font)
@@ -96,6 +97,12 @@ class DetailHouse(QWidget):
         self.verticalLayout_2.addWidget(self.label)
         self.horizontalLayout_5.addWidget(self.widget_9)
         self.plusButton = QPushButton(self.numRoom)
+        self.plusButton.setStyleSheet('background-color: transparent; border-style: none;')
+        icon = QIcon(f'{getDirPath()}/src/assets/plus.png')
+        icon_size = icon.actualSize(QSize(100, 100)) # 70 is the maximum size in pixels
+        self.plusButton.setIcon(icon)
+        self.plusButton.setIconSize(icon_size)
+        self.plusButton.setFixedSize(icon_size)
         self.plusButton.clicked.connect(self.handleClickAddRoom)
         self.plusButton.setMinimumSize(QtCore.QSize(52, 52))
         self.plusButton.setMaximumSize(QtCore.QSize(52, 52))
@@ -136,11 +143,6 @@ class DetailHouse(QWidget):
         self.label_7.setObjectName("label_7")
         self.verticalLayout_5.addWidget(self.label_7)
         self.horizontalLayout_7.addWidget(self.widget_11)
-        self.editButton = QPushButton(self.capacity)
-        self.editButton.setMinimumSize(QtCore.QSize(52, 52))
-        self.editButton.setMaximumSize(QtCore.QSize(52, 52))
-        self.editButton.setObjectName("editButton")
-        self.horizontalLayout_7.addWidget(self.editButton)
         self.verticalLayout_4.addWidget(self.capacity)
         self.consum = QFrame(self.houseInfo)
         self.consum.setMinimumSize(QtCore.QSize(0, 72))
@@ -176,6 +178,7 @@ class DetailHouse(QWidget):
         self.pushButton_3 = QPushButton(self.runButton)
         self.pushButton_3.setMinimumSize(QtCore.QSize(75, 23))
         self.pushButton_3.setObjectName("pushButton_3")
+        self.pushButton_3.clicked.connect(self.handleClick)
         self.verticalLayout_7.addWidget(self.pushButton_3, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.verticalLayout.addWidget(self.runButton)
         self.verticalLayout.setStretch(0, 1)
@@ -189,13 +192,16 @@ class DetailHouse(QWidget):
         self.houseName.setText(_translate("MainWindow", self.title))
         self.label_2.setText(_translate("MainWindow", "Jumlah Ruangan"))
         self.label.setText(_translate("MainWindow", str(self.cntRoom)))
-        self.plusButton.setText(_translate("MainWindow", "+"))
         self.label_6.setText(_translate("MainWindow", "Kapasitas"))
         self.label_7.setText(_translate("MainWindow", f"{self.powerCap} Watt"))
-        self.editButton.setText(_translate("MainWindow", "edit"))
         self.label_8.setText(_translate("MainWindow", "Konsumsi Daya"))
         self.label_9.setText(_translate("MainWindow", f"{self.elConsume} Watt"))
-        self.pushButton_3.setText(_translate("MainWindow", "Run"))
+        if(self.mode):
+            self.pushButton_3.setText(_translate("MainWindow", "Stop"))
+            self.pushButton_3.setStyleSheet("padding: 6px; background-color: #CA1313; border-style: none; border-radius: 8px; color: white; font-size: 14px;")
+        else:
+            self.pushButton_3.setText(_translate("MainWindow", "Run"))
+            self.pushButton_3.setStyleSheet("padding: 6px; background-color: #00A027; border-style: none; border-radius: 8px; color: white; font-size: 14px;")
 
     def handleClick(self):
         self.grandPa.setMode()
