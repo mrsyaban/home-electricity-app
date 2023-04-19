@@ -64,4 +64,7 @@ class SimulationPage(QWidget):
 
         self.layout.addWidget(self.scrollArea_2)
         self.layout.addWidget(self.detailRoom)
+        self.layout.setStretch(0, 1)
+        self.layout.setStretch(1, 2)
+        self.layout.setStretch(2, 1)
 

@@ -138,7 +138,7 @@ class RoomItem(QWidget):
             listEl = room.getElectricity()
             for i in range(len(listEl)):
                 if(self.grandPa1.elsState[self.id][i]):
-                    tmpPower += listEl[i][2]
+                    tmpPower += listEl[i][3]
 
             if(tmpPower>self.powerCap):
                 self.isOn = True

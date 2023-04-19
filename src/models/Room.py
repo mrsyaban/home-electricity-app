@@ -61,7 +61,6 @@ class Room :
             .format(idRoom)
         )
         data = curr.fetchall()
-        print("data 1 sini: " + str(data))
         
         self = cls.__new__(cls)
         if(len(data) > 0):
@@ -88,7 +87,6 @@ class Room :
 
         if(len(data)>0):
             self.powerCap = data[0][1]
-            print("data 2 sini: " + str(data))
         else:
             self.powerCap = 0
         curr.close()

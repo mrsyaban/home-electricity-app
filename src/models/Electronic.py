@@ -112,6 +112,22 @@ class Electronic :
         )
         curr.close()
         conn.close()
+    
+    def deleteElectronic(self):
+        conn = sqlite3.connect('db/wireWolf.db')
+        curr = conn.cursor()
+
+        curr.execute(
+            """
+            DELETE FROM alat_listrik
+            WHERE id = {0}
+            """
+            .format(self.__id)
+        )
+        
+        conn.commit()
+        curr.close()
+        conn.close()
 
     def setVoltase(self, voltase : int):
         self.__voltase = voltase
