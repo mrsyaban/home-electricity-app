@@ -38,11 +38,15 @@ class CircuitBreaker:
             .format(circuitBreakerID)
         )
         data = curr.fetchall()
-        circuitBreakerID, kapasitasDaya = data[0]
-
         self = cls.__new__(cls)
-        self.__id = circuitBreakerID
-        self.__kapasitasDaya = kapasitasDaya
+        if(len(data)>0):
+            circuitBreakerID, kapasitasDaya = data[0]
+
+            self.__id = circuitBreakerID
+            self.__kapasitasDaya = kapasitasDaya
+        else:
+            self.__id = ""
+            self.__kapasitasDaya = 0
 
         curr.close()
         conn.close()      

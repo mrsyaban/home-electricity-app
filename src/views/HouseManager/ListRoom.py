@@ -1,11 +1,11 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QPushButton
+from PyQt5.QtWidgets import QWidget, QLabel, QGridLayout, QPushButton, QSizePolicy
 from views.HouseManager.RoomItem import RoomItem
 from models.House import *
 from models.CircuitBreaker import *
 from models.Room import *
 
 class ListRoom(QWidget):
-    def __init__(self, parent: QWidget, scrollArea: QWidget, idHouse: str, mode: bool, grandPa):
+    def __init__(self, parent: QWidget, idHouse: str, mode: bool, grandPa):
         super().__init__()
         self.parent = parent
         self.idHouse = idHouse
@@ -15,10 +15,10 @@ class ListRoom(QWidget):
         self.listCap = []
         self.listCntEl = []
         self.getDB()
-        self.initUI(scrollArea)
+        self.initUI()
 
-    def initUI(self, scrollArea: QWidget):
-        self.layout = QGridLayout(scrollArea)
+    def initUI(self):
+        self.layout = QGridLayout()
         for i in range(len(self.listRoom)):
                 room = RoomItem(str(self.listRoom[i][0]), self.listRoom[i][1], self.listCntEl[i], self.listCap[i], self.parent, self.mode, self.grandPa)
                 self.layout.addWidget(room, i//2, i%2)
