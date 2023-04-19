@@ -1,21 +1,20 @@
 import sqlite3
 
 class Electronic :
-    def __init__(self, id_ruangan: int, nama : str, daya : int, voltase : int, waktu : int, detail : str, isOn : bool = True) :
+    def __init__(self, id_ruangan: int, nama : str, daya : int, voltase : int, waktu : int) :
         self.__nama : str = nama
         self.__daya : int = daya
         self.__voltase : int = voltase
         self.__waktu : int = waktu
-        self.__detail : str = detail
-        self.__isOn : bool = isOn
+        self.__id_ruangan  = id_ruangan
         conn = sqlite3.connect('db/wireWolf.db')
         curr = conn.cursor()
         curr.execute(
             """
             INSERT INTO alat_listrik(nama, ruangan_id, daya, voltase, waktu, detail)
-            VALUE ('{0}',{1},{2},{3},{4},'{5}')
+            VALUES ('{0}',{1},{2},{3},{4})
             """
-            .format(nama,id_ruangan,daya,voltase,waktu,detail)
+            .format(nama,id_ruangan,daya,voltase,waktu)
         )
 
         curr.execute(
@@ -50,11 +49,10 @@ class Electronic :
         if len(data) == 0 :
             return None
         
-        nama = data[1]
-        daya = data[3]
-        voltase = data[4]
-        waktu = data[5]
-        detail = data[6]
+        nama = data[0][1]
+        daya = data[0][3]
+        voltase = data[0][4]
+        waktu = data[0][5]
 
         self = cls.__new__(cls)
         self.__id = electronicID
@@ -62,8 +60,6 @@ class Electronic :
         self.__daya = daya
         self.__voltase = voltase
         self.__waktu = waktu
-        self.__detail = detail
-        self.__isOn = True
 
         curr.close()
         conn.close()      

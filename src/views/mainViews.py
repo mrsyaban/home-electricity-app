@@ -1,4 +1,3 @@
-import sys
 from PyQt5.QtWidgets import QStackedWidget , QWidget, QApplication, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
 from MainPage.MainPage import MainPage
 from HousePage.HousePage import HousePage
@@ -7,7 +6,7 @@ class MainWindow(QStackedWidget):
     def __init__(self):
         super().__init__()
         self.mainPage: QWidget = MainPage(self)
-        self.housePage: QWidget = HousePage(self, "1")
+        self.housePage: QWidget = HousePage(self, "-1")
         self.initUI()
 
     def initUI(self):
@@ -22,8 +21,3 @@ class MainWindow(QStackedWidget):
         self.housePage = newHousePage
         self.addWidget(newHousePage)
         self.setCurrentWidget(self.housePage)
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    sys.exit(app.exec_())
