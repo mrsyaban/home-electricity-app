@@ -118,7 +118,6 @@ class RoomItem(QWidget):
         self.label_8.setText(_translate("Form", f"{self.powerCap} Watt"))
 
     def mousePressEvent(self, event):
-        print("erver")
         if event.button() == Qt.LeftButton:
             self.grandPa.setIdRoom(self.id)
 
