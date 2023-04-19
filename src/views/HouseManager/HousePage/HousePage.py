@@ -111,7 +111,7 @@ class HousePage(QWidget):
         self.horizontalLayout_3.addWidget(self.detailRoomSpace)
         self.layout.addWidget(self.roomSpace)
 
-        self.listRoom: ListRoom = ListRoom(self, self.scrollAreaWidgetContents_2, self.id, False)
+        self.listRoom: ListRoom = ListRoom(self, self.scrollAreaWidgetContents_2, self.id, False, self.parent)
         self.gridLayout_2.addWidget(self.listRoom)
         # self.layout.addWidget(self.listRoom)
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
