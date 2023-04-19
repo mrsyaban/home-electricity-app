@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import QPushButton, QStackedWidget, QWidget, QHBoxLayout, QLabel
 from controller.houseController import *
-
+from views.MainPage.Button.houseListButton import HouseButton
+from PyQt5.QtCore import QSize
+from PyQt5.QtGui import *
+from utils.getDirPath import getDirPath
 class HouseItem(QWidget):
     def __init__(self, grandPa: QStackedWidget, id: str, nama: str, parent):
         super().__init__()
@@ -12,18 +15,27 @@ class HouseItem(QWidget):
 
     def initUI(self):
         self.layout = QHBoxLayout()
-        self.label = QLabel(self.nama)
-        self.delButton = QPushButton("del")
+
+        # houseName
+        self.houseButton = HouseButton(self.nama, f"{getDirPath()}/src/assets/right.png")
+        self.houseButton.setObjectName("houseButton")
+
+        #delete Button
+        self.delButton = QPushButton()
+        self.delButton.setStyleSheet("QPushButton{background-color: rgba(0,0,0,0); border-radius:12px;}\n"
+                                     "QPushButton::hover  { background-color: #999999;}\n")
+        icon = QIcon(f"{getDirPath()}/src/assets/Delete.png")
+        icon_size = icon.actualSize(QSize(70, 70))
+        self.delButton.setIcon(icon)
+        self.delButton.setIconSize(icon_size)
+        self.delButton.setFixedSize(icon_size)
         self.delButton.clicked.connect(self.handleClickDel)
-        self.showButton = QPushButton("show")
-        self.showButton.clicked.connect(self.handleClickShow)
+        self.houseButton.clicked.connect(self.handleClickShow)
 
-        self.layout.addWidget(self.label)
+        self.layout.addWidget(self.houseButton)
         self.layout.addWidget(self.delButton)
-        self.layout.addWidget(self.showButton)
         self.setLayout(self.layout)
-        self.setStyleSheet("background-color: #D9D9D9;\nfont: 75 8pt \"MS Shell Dlg 2\";\nborder-radius: 20px;\npadding: 5px;\npadding-left: 15px;\npadding-right: 15px;\ncolor: '#000000';")
-
+    
     def handleClickShow(self: QWidget):
         self.grandPa.setIdHouse(self.id)
 
