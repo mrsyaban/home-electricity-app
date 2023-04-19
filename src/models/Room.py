@@ -22,14 +22,15 @@ class Room :
         findIdCircuitBreaker=conn.cursor()
         findIdCircuitBreaker.execute(
             """
-            SELECT id
+            SELECT *
             FROM circuit_breaker
             ORDER BY id DESC
             LIMIT 1
             """
         )
 
-        circuitID=findIdCircuitBreaker.fetchall()[0][0]
+        data = findIdCircuitBreaker.fetchall()
+        circuitID=data[0][0]
         self.id_circuitBreaker=circuitID
         findIdCircuitBreaker.close()
 
@@ -60,7 +61,6 @@ class Room :
             .format(idRoom)
         )
         data = curr.fetchall()
-        print("data 1 sini: " + str(data))
         
         self = cls.__new__(cls)
         if(len(data) > 0):
@@ -81,13 +81,12 @@ class Room :
                 FROM circuit_breaker
                 WHERE id = {0}
             """
-            .format(idRoom)
+            .format(self.id_circuitBreaker)
         )
         data = curr.fetchall()
 
         if(len(data)>0):
             self.powerCap = data[0][1]
-            print("data 2 sini: " + str(data))
         else:
             self.powerCap = 0
         curr.close()
