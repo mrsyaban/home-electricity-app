@@ -5,6 +5,7 @@ from models.Electronic import *
 from utils.getDirPath import getDirPath
 from PyQt5 import QtCore
 from PyQt5.QtGui import QIcon
+from views.HouseManager.Dialog.ElectronicInfoDialog import *
 
 
 class ElectronicItem(QFrame):
@@ -72,3 +73,8 @@ class ElectronicItem(QFrame):
         electronic = Electronic.getElectronicById(int(self.id))
         electronic.deleteElectronic()
         self.grandPa1.reload()
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            dialog = ElectronicInfo(self.id)
+            dialog.exec_()

@@ -1,10 +1,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QDialog
+from models.Electronic import *
 
 class ElectronicInfo(QDialog):
     def __init__(self, electronicID : int) -> None:
         super().__init__()
         self.electronicID = electronicID
+        self.getDB()
         self.setupUi()
 
     def setupUi(self):
@@ -109,12 +111,16 @@ class ElectronicInfo(QDialog):
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("Dialog", "Detail Perangkat Listrik"))
-        self.label.setText(_translate("Dialog", "Oven"))
+        self.label.setText(_translate("Dialog", self.electronic.getName()))
         self.label_6.setText(_translate("Dialog", "Daya"))
-        self.label_7.setText(_translate("Dialog", "1100 Watt"))
+        self.label_7.setText(_translate("Dialog", f"{self.electronic.getWatt()} Watt"))
         self.label_8.setText(_translate("Dialog", "Voltase"))
-        self.label_9.setText(_translate("Dialog", "220 Volt"))
+        self.label_9.setText(_translate("Dialog", f"{self.electronic.getVoltase()} Volt"))
         self.label_10.setText(_translate("Dialog", "Waktu Penggunaan"))
-        self.label_11.setText(_translate("Dialog", "10 Jam"))
+        self.label_11.setText(_translate("Dialog", f"{self.electronic.getWaktu()} Jam"))
+
+    def getDB(self):
+        el = Electronic.getElectronicById(self.electronicID)
+        self.electronic = el
 
 
