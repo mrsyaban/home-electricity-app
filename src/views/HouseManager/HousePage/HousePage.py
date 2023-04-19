@@ -17,7 +17,7 @@ class HousePage(QWidget):
         self.layout: QHBoxLayout = QHBoxLayout()
         self.detailHouse = DetailHouse(self.parent, self.id, self.grandPa, False)
         self.listRoom: ListRoom = ListRoom(self, self.id, False, self.parent)
-        self.detailRoom: DetailRoom = DetailRoom(self, self.idRoom, False, self.parent)
+        self.detailRoom: DetailRoom = DetailRoom(self.parent, self.idRoom, False)
         self.detailHouse.setMaximumWidth(300)
 
         self.layout.addWidget(self.detailHouse)
@@ -89,7 +89,7 @@ class HousePage(QWidget):
 
     def setIdRoom(self, idRoom):
         self.idRoom = idRoom
-        newDetailRoom: DetailRoom = DetailRoom(self, self.idRoom, False, self.parent)
+        newDetailRoom: DetailRoom = DetailRoom(self.parent, self.idRoom, False)
         self.layout.removeWidget(self.detailRoom)
         self.layout.addWidget(newDetailRoom)
         self.detailRoom = newDetailRoom
