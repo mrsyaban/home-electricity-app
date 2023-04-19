@@ -11,24 +11,12 @@ class BackButton(QPushButton):
 
     def initUI(self):
         self.clicked.connect(self.handleClick) 
-        self.setStyleSheet('background-color: transparent; border-style: none;')
+        self.setStyleSheet('QPushButton { background-color: transparent; border-radius: 7px;} QPushButton::hover  { background-color: #999999;}')
         icon = QIcon(f'{getDirPath()}/src/assets/Back.png')
         icon_size = icon.actualSize(QSize(100, 100)) # 70 is the maximum size in pixels
         self.setIcon(icon)
         self.setIconSize(icon_size)
         self.setFixedSize(icon_size)
-        # self.setIconColor()
-    
-    def setIconColor(self) :
-        icon = self.icon()
-        if icon:
-            size = icon.availableSizes()[0]
-            pixmap = icon.pixmap(size)
-            painter = QPainter(pixmap)
-            painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
-            painter.fillRect(pixmap.rect(), QColor("#444444"))
-            painter.end()
-            self.setIcon(QIcon(pixmap))
 
     def handleClick(self):
         self.grandPa2.back()

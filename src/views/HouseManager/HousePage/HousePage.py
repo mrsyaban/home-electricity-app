@@ -14,6 +14,7 @@ class HousePage(QWidget):
         self.initUI()
 
     def initUI(self):
+        
         self.layout: QHBoxLayout = QHBoxLayout()
         self.detailHouse = DetailHouse(self.parent, self.id, self.grandPa, False)
         self.listRoom: ListRoom = ListRoom(self, self.id, False, self.parent)
@@ -24,7 +25,7 @@ class HousePage(QWidget):
 
         self.scrollArea_2 = QScrollArea()
         self.scrollArea_2.setWidget(self.listRoom)
-        self.scrollArea_2.setStyleSheet("background-color: white; border-radius: 20px;")
+        self.scrollArea_2.setStyleSheet("background-color: #D9D9D9; border-radius: 20px;")
         self.layout.addWidget(self.scrollArea_2)
 
         self.layout.addWidget(self.detailRoom)

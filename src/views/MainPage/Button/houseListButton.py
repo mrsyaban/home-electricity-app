@@ -21,7 +21,7 @@ class HouseButton(QPushButton):
                             "QPushButton::icon {\n"
                             "margin-right: 0px;\n"
                             "margin-left: 50px;}\n"
-                            "QPushButton::hover  { background-color: #979797;}\n")
+                            "QPushButton::hover  { background-color: #999999;}\n")
 
 if __name__ == '__main__':
     app = QApplication([])

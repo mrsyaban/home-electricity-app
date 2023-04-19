@@ -9,7 +9,8 @@ from PyQt5 import QtCore, QtGui
 from views.HouseManager.Dialog.AddRoomDialog import *
 from models.Room import Room
 from utils.getDirPath import *
-
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
 
 class DetailHouse(QWidget):
     def __init__(self, grandPa: QStackedWidget, id: str, grandPa1: QStackedWidget, mode: bool):
@@ -99,15 +100,15 @@ class DetailHouse(QWidget):
         self.verticalLayout_2.addWidget(self.label)
         self.horizontalLayout_5.addWidget(self.widget_9)
         self.plusButton = QPushButton(self.numRoom)
-        self.plusButton.setStyleSheet('background-color: transparent; border-style: none;')
+        self.plusButton.setStyleSheet('QPushButton { background-color: transparent; border-radius: 14px;} QPushButton::hover  { background-color: #999999;}')
         icon = QIcon(f'{getDirPath()}/src/assets/plus.png')
         icon_size = icon.actualSize(QSize(100, 100)) # 70 is the maximum size in pixels
         self.plusButton.setIcon(icon)
         self.plusButton.setIconSize(icon_size)
         self.plusButton.setFixedSize(icon_size)
         self.plusButton.clicked.connect(self.handleClickAddRoom)
-        self.plusButton.setMinimumSize(QtCore.QSize(52, 52))
-        self.plusButton.setMaximumSize(QtCore.QSize(52, 52))
+        self.plusButton.setMinimumSize(QtCore.QSize(30, 30))
+        self.plusButton.setMaximumSize(QtCore.QSize(30, 30))
         self.plusButton.setObjectName("plusButton")
         self.horizontalLayout_5.addWidget(self.plusButton)
         self.verticalLayout_4.addWidget(self.numRoom)
@@ -190,6 +191,8 @@ class DetailHouse(QWidget):
         self.label_10.setObjectName("label_10")
         self.verticalLayout_7.addWidget(self.label_10)
         self.label_11 = QLabel(self.status)
+        self.label_11.setMinimumSize(25,25)
+        self.label_11.setMaximumSize(25,25)
         self.label_11.setObjectName("label_11")
         self.verticalLayout_7.addWidget(self.label_11)
         self.verticalLayout_4.addWidget(self.status)
@@ -230,9 +233,10 @@ class DetailHouse(QWidget):
             self.label_10.setText(_translate("MainWindow", "Status"))
             self.label_11.setText("")
             self.label_11.setFixedHeight(30)
-            self.label_11.setStyleSheet("margin-bottom: 5px; padding: 6px; background-color: black; border-style: none; border-radius: 10px; color: white; font-size: 14px;")
+            
+            self.label_11.setStyleSheet("margin-bottom: 5px; padding: 6px; background-color: black; border-style: none; border-radius: 12px; color: white; font-size: 14px;")
             if(self.isOn):
-                self.label_11.setStyleSheet("margin-bottom: 5px; padding: 6px; background-color: yellow; border-style: none; border-radius: 10px; color: white; font-size: 14px;")
+                self.label_11.setStyleSheet("margin-bottom: 5px; padding: 6px; background-color: yellow; border-style: none; border-radius: 12px; color: white; font-size: 14px;")
         else:
             self.pushButton_3.setText(_translate("MainWindow", "Run"))
             self.pushButton_3.setStyleSheet("padding: 6px; background-color: #00A027; border-style: none; border-radius: 8px; color: white; font-size: 14px;")
