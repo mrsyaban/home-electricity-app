@@ -61,6 +61,8 @@ class Room :
             .format(idRoom)
         )
         data = curr.fetchall()
+        print("data 1 sini: " + str(data))
+        
         self = cls.__new__(cls)
         if(len(data) > 0):
             id, nama, rumah_id, id_circuit = data[0]
@@ -83,8 +85,12 @@ class Room :
             .format(self.id_circuitBreaker)
         )
         data = curr.fetchall()
+
         if(len(data)>0):
             self.powerCap = data[0][1]
+            print("data 2 sini: " + str(data))
+        else:
+            self.powerCap = 0
         curr.close()
         conn.close()      
 
@@ -168,5 +174,4 @@ class Room :
         )
         data=curr.fetchall()
         return data
-    
 

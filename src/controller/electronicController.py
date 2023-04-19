@@ -48,6 +48,8 @@ class ElectronicController:
             ubah.setVoltase(voltase)
         except:
             print("Gagal mengubah voltase elektronik")
+    
+    @staticmethod
     def getListElectricRoom(id):
         conn = sqlite3.connect('db/wirewolf.db')
         curr = conn.cursor()

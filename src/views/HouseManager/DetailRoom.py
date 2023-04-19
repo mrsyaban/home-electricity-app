@@ -5,6 +5,8 @@ from views.HouseManager.ElectronicItem import *
 from views.HouseManager.Dialog.AddElectronicDialog import *
 from views.HouseManager.ElectronicItem import *
 from models.Room import *
+from models.Room import Room
+from controller.electronicController import ElectronicController
 
 class DetailRoom(QWidget):
     def __init__(self, parent: QWidget, idRoom: str, mode: bool, grandPa):
@@ -26,14 +28,22 @@ class DetailRoom(QWidget):
             self.titleHolds = QWidget(self)
             self.titleLayout = QVBoxLayout(self.titleHolds)
 
-            # room title
-            self.roomTitle = QPushButton(self.titleHolds)
-            self.roomTitle.setText(self.room.nama) #input title 
-            font = QFont()
-            font.setPointSize(20)
-            self.roomTitle.setFont(font)
-            self.roomCap = QPushButton(self.titleHolds)
-            self.roomCap.setText(f"{self.room.powerCap} Watt") #input roomcap
+        # room title
+        roomName = curRoom.nama
+        print("idRoom: "+self.idRoom)
+        print("roomName: "+roomName)
+        self.roomTitle = QPushButton(self.titleHolds)
+        self.roomTitle.setText(str(roomName)) #input title
+        self.roomTitle.setStyleSheet('background-color: transparent; border-style: none;') 
+        font = QFont()
+        font.setPointSize(20)
+        self.roomTitle.setFont(font)
+
+        roomPowerCap = curRoom.powerCap
+        self.roomCap = QPushButton(self.titleHolds)
+        self.roomCap.setText(str(roomPowerCap)) #input roomcap
+        self.roomCap.setStyleSheet('background-color: transparent; border-style: none;') 
+        print("roomCap: " + str(roomPowerCap))
 
             self.titleLayout.addWidget(self.roomTitle)
             self.titleLayout.addWidget(self.roomCap)
