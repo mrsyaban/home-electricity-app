@@ -173,7 +173,7 @@ class DetailHouse(QWidget):
 
         self.status = QFrame(self.houseInfo)
         self.status.setMinimumSize(QtCore.QSize(0, 72))
-        self.status.setMaximumSize(QtCore.QSize(16777215, 72))
+        self.status.setMaximumSize(QtCore.QSize(16777215, 100))
         self.status.setFrameShape(QFrame.StyledPanel)
         self.status.setFrameShadow(QFrame.Raised)
         self.status.setObjectName("status")
@@ -228,9 +228,11 @@ class DetailHouse(QWidget):
             self.pushButton_3.setText(_translate("MainWindow", "Stop"))
             self.pushButton_3.setStyleSheet("padding: 6px; background-color: #CA1313; border-style: none; border-radius: 8px; color: white; font-size: 14px;")
             self.label_10.setText(_translate("MainWindow", "Status"))
-            self.label_11.setText(_translate("MainWindow", "Mati"))
+            self.label_11.setText("")
+            self.label_11.setFixedHeight(30)
+            self.label_11.setStyleSheet("margin-bottom: 5px; padding: 6px; background-color: black; border-style: none; border-radius: 10px; color: white; font-size: 14px;")
             if(self.isOn):
-                self.label_11.setText(_translate("MainWindow", "Hidup"))
+                self.label_11.setStyleSheet("margin-bottom: 5px; padding: 6px; background-color: yellow; border-style: none; border-radius: 10px; color: white; font-size: 14px;")
         else:
             self.pushButton_3.setText(_translate("MainWindow", "Run"))
             self.pushButton_3.setStyleSheet("padding: 6px; background-color: #00A027; border-style: none; border-radius: 8px; color: white; font-size: 14px;")
@@ -272,6 +274,6 @@ class DetailHouse(QWidget):
                     for j in range(len(listEl)):
                         if(self.grandPa.elsState[str(listRoom[i][0])][j]):
                             tmpPower += listEl[j][3]
-                            
+
                 if(tmpPower>house.power):
                     self.isOn = True
