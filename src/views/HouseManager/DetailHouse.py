@@ -6,7 +6,8 @@ from views.HouseManager.Labels.ConsumeLabel import ConsumeLabel
 from models.House import *
 from models.CircuitBreaker import *
 from PyQt5 import QtCore, QtGui
-# from views.Button.TextButton import TextButton
+from views.HouseManager.Dialog.AddRoomDialog import *
+from models.Room import Room
 
 
 class DetailHouse(QWidget):
@@ -24,36 +25,6 @@ class DetailHouse(QWidget):
         self.initUI()
 
     def initUI(self):
-        # self.layout = QVBoxLayout()
-        # self.titleWidget = QWidget()
-        # self.titleLayout = QHBoxLayout()
-        # self.backButton = BackButton(self.grandPa1)
-        # self.title = QLabel(self.title)
-        # self.titleLayout.addWidget(self.backButton)
-        # self.titleLayout.addWidget(self.title)
-        # self.titleWidget.setLayout(self.titleLayout)
-        # self.cntRoomLabel = CntRoomLabel(self.cntRoom, self.id, self.mode)
-        # self.powerCapLabel = PowHouseLabel(self.powerCap, self.id, self.mode)
-        # self.elConsumeLabel = ConsumeLabel(self.elConsume, self.id, self.mode)
-        # self.toggleMode: QPushButton 
-        # if(self.mode):
-        #     self.toggleMode = QPushButton("Stop")
-        # else:
-        #     self.toggleMode = QPushButton("Run")
-        
-        # self.toggleMode.clicked.connect(self.handleClick)
-
-        # self.layout.addWidget(self.titleWidget)
-        # self.layout.addWidget(self.cntRoomLabel)
-        # self.layout.addWidget(self.powerCapLabel)
-        # self.layout.addWidget(self.elConsumeLabel)
-        # self.layout.addWidget(self.toggleMode)
-        # self.setLayout(self.layout)
-
-
-        # copy dari UI
-        # self = QtWidgets.QWidget(self.page)
-        # self.setEnabled(False)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -125,6 +96,7 @@ class DetailHouse(QWidget):
         self.verticalLayout_2.addWidget(self.label)
         self.horizontalLayout_5.addWidget(self.widget_9)
         self.plusButton = QPushButton(self.numRoom)
+        self.plusButton.clicked.connect(self.handleClickAddRoom)
         self.plusButton.setMinimumSize(QtCore.QSize(52, 52))
         self.plusButton.setMaximumSize(QtCore.QSize(52, 52))
         self.plusButton.setObjectName("plusButton")
@@ -214,25 +186,38 @@ class DetailHouse(QWidget):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "StackedWidget"))
-        self.houseName.setText(_translate("MainWindow", "Rumah Angker"))
+        self.houseName.setText(_translate("MainWindow", self.title))
         self.label_2.setText(_translate("MainWindow", "Jumlah Ruangan"))
-        self.label.setText(_translate("MainWindow", "5"))
+        self.label.setText(_translate("MainWindow", str(self.cntRoom)))
         self.plusButton.setText(_translate("MainWindow", "+"))
         self.label_6.setText(_translate("MainWindow", "Kapasitas"))
-        self.label_7.setText(_translate("MainWindow", "1100 Watt"))
+        self.label_7.setText(_translate("MainWindow", f"{self.powerCap} Watt"))
         self.editButton.setText(_translate("MainWindow", "edit"))
         self.label_8.setText(_translate("MainWindow", "Konsumsi Daya"))
-        self.label_9.setText(_translate("MainWindow", "TextLabel"))
+        self.label_9.setText(_translate("MainWindow", f"{self.elConsume} Watt"))
         self.pushButton_3.setText(_translate("MainWindow", "Run"))
 
     def handleClick(self):
         self.grandPa.setMode()
 
+    def handleClickAddRoom(self):
+        addRoomDialog = AddRoomDialog(self.id, self.grandPa)
+        addRoomDialog.exec_()
+
     def getDB(self):
         if(self.id != "-1"):
             dataHouse = House.getHouseById(self.id)
             dataCircuit = CircuitBreaker.getCircuitBreakerById(dataHouse.idCircuit)
+            
             listRoom = dataHouse.getAllRoom()
+            tmpConsume = 0
+            for i in range(len(listRoom)):
+                room = Room.getRoomById(listRoom[i][0])
+                listEl = room.getElectricity()
+                for j in range(len(listEl)):
+                    tmpConsume += listEl[j][3]*listEl[j][5]*30
+            
             self.title = dataHouse.name
             self.powerCap = dataCircuit.getCapacity()
             self.cntRoom = len(listRoom)
+            self.elConsume = tmpConsume
