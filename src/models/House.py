@@ -1,4 +1,5 @@
 import sqlite3
+from models.Room import *
 
 class House :
     # CONSTRUCTOR
@@ -68,6 +69,18 @@ class House :
             self.name = ""
             self.idCircuit = ""
 
+        curr.execute(
+            """
+                SELECT * 
+                FROM circuit_breaker
+                WHERE id = {0}
+            """
+            .format(self.idCircuit)
+        )
+        data = curr.fetchall()
+        self.power = data[0][1]
+        
+
         curr.close()
         conn.close()      
 
@@ -110,6 +123,11 @@ class House :
     def deleteHouse(self):
         conn = sqlite3.connect('db/wireWolf.db')
         curr = conn.cursor()
+
+        listRoom = self.getAllRoom()
+        for i in range(len(listRoom)):
+            tmpRoom = Room.getRoomById(listRoom[i][0])
+            tmpRoom.removeRoom()
 
         curr.execute(
             """

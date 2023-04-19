@@ -102,19 +102,20 @@ class DetailRoom(QWidget):
             # self.bodyLayout.setContentsMargins(100, -1, 100, -1)
 
             # addButton
-            self.addElec = QPushButton(self.body)
-            self.addElec.clicked.connect(self.handleAdd)
-            self.addElec.setText("+")
-            self.addElec.setMinimumSize(QtCore.QSize(0, 40))
-            self.addElec.setStyleSheet("QPushButton {background-color: #D9D9D9;\n"
-                                    "font: 75 8pt \"MS Shell Dlg 2\";\n"
-                                    "border-radius: 20px;\n"
-                                        "padding: 5px;\n"
-                                    "padding-left: 15px;\n"
-                                        "padding-right: 15px;}\n"
-                                        "QPushButton::hover { background-color: #565656;}\n")
+            if(not self.mode):
+                self.addElec = QPushButton(self.body)
+                self.addElec.clicked.connect(self.handleAdd)
+                self.addElec.setText("+")
+                self.addElec.setMinimumSize(QtCore.QSize(0, 40))
+                self.addElec.setStyleSheet("QPushButton {background-color: #D9D9D9;\n"
+                                        "font: 75 8pt \"MS Shell Dlg 2\";\n"
+                                        "border-radius: 20px;\n"
+                                            "padding: 5px;\n"
+                                        "padding-left: 15px;\n"
+                                            "padding-right: 15px;}\n"
+                                            "QPushButton::hover { background-color: #565656;}\n")
 
-            self.bodyLayout.addWidget(self.addElec)
+                self.bodyLayout.addWidget(self.addElec)
 
             # Frame for list item
             self.listItemFrame = QFrame(self.body)

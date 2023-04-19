@@ -22,6 +22,8 @@ class DetailHouse(QWidget):
         self.cntRoom = 0
         self.powerCap = 0
         self.elConsume = 0
+        self.isOn = False
+        self.changeIsOn()
         self.getDB()
         self.initUI()
 
@@ -109,6 +111,7 @@ class DetailHouse(QWidget):
         self.plusButton.setObjectName("plusButton")
         self.horizontalLayout_5.addWidget(self.plusButton)
         self.verticalLayout_4.addWidget(self.numRoom)
+
         self.capacity = QFrame(self.houseInfo)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
@@ -144,6 +147,7 @@ class DetailHouse(QWidget):
         self.verticalLayout_5.addWidget(self.label_7)
         self.horizontalLayout_7.addWidget(self.widget_11)
         self.verticalLayout_4.addWidget(self.capacity)
+
         self.consum = QFrame(self.houseInfo)
         self.consum.setMinimumSize(QtCore.QSize(0, 72))
         self.consum.setMaximumSize(QtCore.QSize(16777215, 72))
@@ -166,6 +170,30 @@ class DetailHouse(QWidget):
         self.label_9.setObjectName("label_9")
         self.verticalLayout_6.addWidget(self.label_9)
         self.verticalLayout_4.addWidget(self.consum)
+
+        self.status = QFrame(self.houseInfo)
+        self.status.setMinimumSize(QtCore.QSize(0, 72))
+        self.status.setMaximumSize(QtCore.QSize(16777215, 72))
+        self.status.setFrameShape(QFrame.StyledPanel)
+        self.status.setFrameShadow(QFrame.Raised)
+        self.status.setObjectName("status")
+        self.verticalLayout_7 = QVBoxLayout(self.status)
+        self.verticalLayout_7.setContentsMargins(12, 3, 12, 3)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.label_10 = QLabel(self.status)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_10.setFont(font)
+        self.label_10.setStyleSheet("color: rgb(0, 0, 0);")
+        self.label_10.setObjectName("label_10")
+        self.verticalLayout_7.addWidget(self.label_10)
+        self.label_11 = QLabel(self.status)
+        self.label_11.setObjectName("label_11")
+        self.verticalLayout_7.addWidget(self.label_11)
+        self.verticalLayout_4.addWidget(self.status)
+
         self.verticalLayout.addWidget(self.houseInfo)
         spacerItem = QSpacerItem(20, 90, QSizePolicy.Minimum, QSizePolicy.Minimum)
         self.verticalLayout.addItem(spacerItem)
@@ -199,6 +227,10 @@ class DetailHouse(QWidget):
         if(self.mode):
             self.pushButton_3.setText(_translate("MainWindow", "Stop"))
             self.pushButton_3.setStyleSheet("padding: 6px; background-color: #CA1313; border-style: none; border-radius: 8px; color: white; font-size: 14px;")
+            self.label_10.setText(_translate("MainWindow", "Status"))
+            self.label_11.setText(_translate("MainWindow", "Mati"))
+            if(self.isOn):
+                self.label_11.setText(_translate("MainWindow", "Hidup"))
         else:
             self.pushButton_3.setText(_translate("MainWindow", "Run"))
             self.pushButton_3.setStyleSheet("padding: 6px; background-color: #00A027; border-style: none; border-radius: 8px; color: white; font-size: 14px;")
@@ -227,3 +259,19 @@ class DetailHouse(QWidget):
             self.powerCap = dataCircuit.getCapacity()
             self.cntRoom = len(listRoom)
             self.elConsume = tmpConsume
+
+    def changeIsOn(self):
+        if(self.id != "-1"):
+            if(self.mode):
+                tmpPower = 0
+                house = House.getHouseById(self.id)
+                listRoom = house.getAllRoom()
+                for i in range(len(listRoom)):
+                    room = Room.getRoomById(listRoom[i][0])
+                    listEl = room.getElectricity()
+                    for j in range(len(listEl)):
+                        if(self.grandPa.elsState[str(listRoom[i][0])][j]):
+                            tmpPower += listEl[j][3]
+                            
+                if(tmpPower>house.power):
+                    self.isOn = True
