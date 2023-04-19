@@ -3,6 +3,8 @@ from PyQt5.QtGui import *
 from PyQt5 import QtCore
 from views.HouseManager.ElectronicItem import *
 from views.HouseManager.Dialog.AddElectronicDialog import *
+from models.Room import Room
+from controller.electronicController import ElectronicController
 
 class DetailRoom(QWidget):
     def __init__(self, parent: QWidget, idRoom: str, mode: bool):
@@ -32,14 +34,24 @@ class DetailRoom(QWidget):
         self.titleHolds = QWidget(self)
         self.titleLayout = QVBoxLayout(self.titleHolds)
 
+        curRoom = Room.getRoomById(self.idRoom)
+
         # room title
+        roomName = curRoom.nama
+        print("idRoom: "+self.idRoom)
+        print("roomName: "+roomName)
         self.roomTitle = QPushButton(self.titleHolds)
-        self.roomTitle.setText("Ruangan Coli") #input title 
+        self.roomTitle.setText(str(roomName)) #input title
+        self.roomTitle.setStyleSheet('background-color: transparent; border-style: none;') 
         font = QFont()
         font.setPointSize(20)
         self.roomTitle.setFont(font)
+
+        roomPowerCap = curRoom.powerCap
         self.roomCap = QPushButton(self.titleHolds)
-        self.roomCap.setText("1000 Megawati") #input roomcap
+        self.roomCap.setText(str(roomPowerCap)) #input roomcap
+        self.roomCap.setStyleSheet('background-color: transparent; border-style: none;') 
+        print("roomCap: " + str(roomPowerCap))
 
         self.titleLayout.addWidget(self.roomTitle)
         self.titleLayout.addWidget(self.roomCap)
@@ -116,31 +128,37 @@ class DetailRoom(QWidget):
         self.listItemLayout = QVBoxLayout(self.listItemFrame)
 
         # electronic item
-        self.itemFrame = QFrame(self.listItemFrame)
-        self.itemFrame.setMinimumSize(QtCore.QSize(0, 40))
-        self.itemFrame.setMaximumSize(QtCore.QSize(16777215, 40))
-        self.itemFrame.setStyleSheet("background-color: #D9D9D9;\n"
-"font: 75 8pt \"MS Shell Dlg 2\";\n"
-"border-radius: 20px;\n"
-"padding: 5px;\n"
-"padding-left: 15px;\n"
-"padding-right: 15px;\n"
-"color: \'#000000\';\n"
-"")
-        self.itemFrame.setFrameShape(QFrame.StyledPanel)
-        self.itemFrame.setFrameShadow(QFrame.Raised)
-        self.itemLayout = QHBoxLayout(self.itemFrame)
-        self.itemLayout.setContentsMargins(0, 0, 0, 0)
-        self.itemLayout.setSpacing(3)
+#         self.itemFrame = QFrame(self.listItemFrame)
+#         self.itemFrame.setMinimumSize(QtCore.QSize(0, 40))
+#         self.itemFrame.setMaximumSize(QtCore.QSize(16777215, 40))
+#         self.itemFrame.setStyleSheet("background-color: #D9D9D9;\n"
+# "font: 75 8pt \"MS Shell Dlg 2\";\n"
+# "border-radius: 20px;\n"
+# "padding: 5px;\n"
+# "padding-left: 15px;\n"
+# "padding-right: 15px;\n"
+# "color: \'#000000\';\n"
+# "")
+#         self.itemFrame.setFrameShape(QFrame.StyledPanel)
+#         self.itemFrame.setFrameShadow(QFrame.Raised)
+#         self.itemLayout = QHBoxLayout(self.itemFrame)
+#         self.itemLayout.setContentsMargins(0, 0, 0, 0)
+#         self.itemLayout.setSpacing(3)
         
-        self.itemName = QPushButton(self.itemFrame)
-        self.itemName.setText("") #input item Name
-        self.checkBox = QCheckBox(self.itemFrame)
-        self.checkBox.setMaximumSize(QtCore.QSize(40, 16777215))
+#         self.itemName = QPushButton(self.itemFrame)
+#         self.itemName.setText("") #input item Name
+#         self.checkBox = QCheckBox(self.itemFrame)
+#         self.checkBox.setMaximumSize(QtCore.QSize(40, 16777215))
 
-        self.itemLayout.addWidget(self.itemName)
-        self.itemLayout.addWidget(self.checkBox)
-        self.bodyLayout.addWidget(self.itemFrame)
+#         self.itemLayout.addWidget(self.itemName)
+#         self.itemLayout.addWidget(self.checkBox)
+
+        listElectronic = ElectronicController.getListElectricRoom(self.idRoom)
+        for i in range(len(listElectronic)):
+            # item = ElectronicItem(listElectronic[i], self.body, listElectronic[i], )
+            self.listItemLayout.addWidget(item)
+
+        self.bodyLayout.addWidget(self.listItemFrame)
 
         spacerItem = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.listItemLayout.addItem(spacerItem)
