@@ -1,7 +1,9 @@
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QPushButton,QApplication
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import *
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import *
 from models.Room import *
+from utils.getDirPath import *
 
 class RoomItem(QWidget):
     def __init__(self, id: str, name: str, cntEl: int, powerCap: int, grandPa: QWidget, mode: bool, grandPa1):
@@ -25,6 +27,7 @@ class RoomItem(QWidget):
         self.widget.setStyleSheet("background-color: \'#FEF7F7\';")
         self.widget.setObjectName("widget")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.widget)
+        self.verticalLayout_5.setAlignment(Qt.AlignCenter)
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 20)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.roomTitle_2 = QtWidgets.QLabel(self.widget)
@@ -98,16 +101,21 @@ class RoomItem(QWidget):
 
         if(self.mode):
             self.indicator = QLabel("mati")
+            self.indicator.setText("")
+            self.indicator.setFixedHeight(30)
+            self.indicator.setStyleSheet("margin: 0 10px 0 10px; padding: 6px; background-color: black; border-style: none; border-radius: 10px; color: white; font-size: 14px;")
             if(self.isOn):
-                self.indicator.setText("hidup")
+                self.indicator.setStyleSheet("margin: 0 10px 0 10px; padding: 6px; background-color: yellow; border-style: none; border-radius: 10px; color: white; font-size: 14px;")
             self.verticalLayout_5.addWidget(self.indicator)
         else:
             self.deletButton_2 = QtWidgets.QPushButton(self.widget)
-            self.deletButton_2.setMinimumSize(QtCore.QSize(25, 25))
-            self.deletButton_2.setMaximumSize(QtCore.QSize(5, 5))
-            self.deletButton_2.setStyleSheet("background-color: rgb(68, 68, 68);")
+            self.deletButton_2.setStyleSheet('background-color: transparent; border-style: none;')
+            icon = QIcon(f'{getDirPath()}/src/assets/Delete.png')
+            icon_size = icon.actualSize(QSize(100, 100))
+            self.deletButton_2.setIcon(icon)
+            self.deletButton_2.setIconSize(icon_size)
+            self.deletButton_2.setFixedSize(icon_size)
             self.deletButton_2.setObjectName("deletButton_2")
-            self.deletButton_2.setText("del")
             self.deletButton_2.clicked.connect(self.handleClickDel)
             self.verticalLayout_5.addWidget(self.deletButton_2, 0, QtCore.Qt.AlignCenter)
 
