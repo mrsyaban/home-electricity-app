@@ -27,7 +27,7 @@ class MainPage(QWidget):
         self.logoLayout = QVBoxLayout(self.logoFrame)
         self.logoWidget = QWidget(self.logoFrame)
         self.logo = QLabel(self.logoWidget)
-        logoPixmap = QPixmap("./././img/logo.png").scaled(400, 200)
+        logoPixmap = QPixmap(f"{getDirPath()}/src/assets/logo.png").scaled(400, 200)
         self.logo.setPixmap(logoPixmap)
         self.logo.setAlignment(Qt.AlignHCenter)
         self.logoLayout.addWidget(self.logo)

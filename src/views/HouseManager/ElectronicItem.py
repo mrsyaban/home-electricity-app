@@ -27,20 +27,19 @@ class ElectronicItem(QFrame):
         self.itemLayout.setContentsMargins(0, 0, 0, 0)
         self.itemLayout.setSpacing(3)
         
-        self.itemName = QPushButton(self)
-        self.itemName.setText(self.nama) #input item Name
+        self.itemName = QLabel(self)
+        self.itemName.setText(self.nama)
         self.itemLayout.addWidget(self.itemName) 
 
         self.setMinimumSize(QSize(0, 40))
         self.setMaximumSize(QSize(16777215, 40))
-        self.setStyleSheet("background-color: #D9D9D9;\n"
-                                     "font: 75 8pt \"MS Shell Dlg 2\";\n"
+        self.setStyleSheet("QFrame{ background-color: #D9D9D9;\n"
+                                     "font: 75 12pt \"MS Shell Dlg 2\";\n"
                                      "border-radius: 20px;\n"
                                      "padding: 5px;\n"
                                      "padding-left: 15px;\n"
                                      "padding-right: 15px;\n"
-                                     "color: \'#000000\';\n"
-                                     "")
+                                     "color: \'#000000\';}\n")
         self.setFrameShape(QFrame.StyledPanel)
         self.setFrameShadow(QFrame.Raised)
         if (self.isInSimulation):
@@ -78,3 +77,4 @@ class ElectronicItem(QFrame):
         if event.button() == Qt.LeftButton:
             dialog = ElectronicInfo(self.id)
             dialog.exec_()
+    
