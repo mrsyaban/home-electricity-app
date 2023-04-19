@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QStackedWidget , QWidget, QApplication, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
 from views.HouseManager.HousePage.HousePage import HousePage
-# from views.HouseManager.SimulationPage.SimulationPage import SimulationPage
+from views.HouseManager.SimulationPage.SimulationPage import SimulationPage
 from models.Room import *
 from models.House import *
 
@@ -12,12 +12,12 @@ class HouseManager(QStackedWidget):
         self.isSimulate = False
         self.createState()
         self.housePage: QWidget = HousePage(self, self.id, self.parent)
-        # self.simulationPage: QWidget = SimulationPage(self, self.id, self.parent)
+        self.simulationPage: QWidget = SimulationPage(self, self.id, self.parent)
         self.initUI()
 
     def initUI(self):
         self.addWidget(self.housePage)
-        # self.addWidget(self.simulationPage)
+        self.addWidget(self.simulationPage)
         self.setCurrentWidget(self.housePage)
         self.show()
 
@@ -25,7 +25,7 @@ class HouseManager(QStackedWidget):
         self.isSimulate = not self.isSimulate
         if(self.isSimulate):
             self.createState()
-            # self.setCurrentWidget(self.simulationPage)
+            self.setCurrentWidget(self.simulationPage)
         else:
             self.setCurrentWidget(self.housePage)
 
@@ -33,7 +33,7 @@ class HouseManager(QStackedWidget):
         self.removeWidget(self.housePage)
         self.housePage = HousePage(self, self.id, self.parent)
         self.addWidget(self.housePage)
-        self.setCurrentWidget(self.housePage)
+        self.setCurrentWidget(self.housePage)   
 
     def createState(self):
         if(self.id != "-1"):
@@ -50,4 +50,4 @@ class HouseManager(QStackedWidget):
 
     def setState(self, idRoom, idx, value):
         self.elsState[idRoom][idx] = value
-        # self.simulationPage.reloadUI()
+        self.simulationPage.reloadUI()

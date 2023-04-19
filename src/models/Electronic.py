@@ -11,7 +11,7 @@ class Electronic :
         curr = conn.cursor()
         curr.execute(
             """
-            INSERT INTO alat_listrik(nama, ruangan_id, daya, voltase, waktu, detail)
+            INSERT INTO alat_listrik(nama, ruangan_id, daya, voltase, waktu_penggunaan)
             VALUES ('{0}',{1},{2},{3},{4})
             """
             .format(nama,id_ruangan,daya,voltase,waktu)
@@ -21,15 +21,17 @@ class Electronic :
             """
             SELECT id 
             FROM alat_listrik
-            ORDER BY id
+            ORDER BY id DESC
             LIMIT 1
             """
         )
 
         self.__id = curr.fetchone()
+
     
 
         curr.close()
+        conn.commit()
         conn.close()
 
     @classmethod
@@ -108,6 +110,22 @@ class Electronic :
             """
             .format(detail,self.__id)
         )
+        curr.close()
+        conn.close()
+    
+    def deleteElectronic(self):
+        conn = sqlite3.connect('db/wireWolf.db')
+        curr = conn.cursor()
+
+        curr.execute(
+            """
+            DELETE FROM alat_listrik
+            WHERE id = {0}
+            """
+            .format(self.__id)
+        )
+        
+        conn.commit()
         curr.close()
         conn.close()
 

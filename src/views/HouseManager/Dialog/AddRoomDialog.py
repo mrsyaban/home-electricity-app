@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from controller.roomController import *
+from models.Room import *
 
 class AddRoomDialog(QDialog):
     def __init__(self, idHouse, grandPa1):
@@ -113,6 +113,6 @@ class AddRoomDialog(QDialog):
     def handle_submit(self):
         name = self.lineEdit.text()
         power = int(self.lineEdit_2.text())
-        x = RoomController.add(name, self.idHouse, power)
+        x = Room(name, self.idHouse, power)
         self.grandPa1.reload()
         self.accept()
