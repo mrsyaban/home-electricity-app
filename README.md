@@ -1,9 +1,17 @@
-# WireWorld
+<div align="center">
+  <h1 align="center">Wire World</h1>
+
+  <p align="center">
+    A Home Electricity App
+    <br />
+  </p>
+</div>
 > Disusun untuk memenuhi Tugas 7 Implementasi Perancangan Perangkat Lunak IF2250 Rekayasa Perangkat Lunak.
 
 
 ## Deskripsi Singkat Program
-Saat menggunakan perangkat listrik seringkali Miniatur Circuit Breaker (MCB) rumah “jeglek” dikarenakan perangkat listrik yang digunakan melebihi beban maksimal. namun, sulit untuk tahu sisa daya yang tersedia untuk dapat dipakai dan di ruangan mana yang masih tersedia daya yang cukup untuk perangkat yang ingin digunakan tersebut. dan juga banyak orang seringkali kaget saat melihat tagihan listrik rumah yang tiba-tiba melonjak dikarenakan jumlah tagihannya jauh diluar prediksinya. Oleh karena itu dibutuhkan aplikasi yang dapat menyimulasikan sistem kelistrikan rumah. lewat Wire Wolf, orang dapat mengetahui konsumsi daya dan status circuit breaker dan perangkat listrik  di rumahnya secara real time pada simulasi dan juga dapat memperkirakan konsumsi listrik per bulannya dengan akurat.
+Pada perangkat lunak ini, terdapat berbagai fitur sehingga dapat menyelesaikan masalah pengguna. yang pertama adalah input yang menyesuaikan user. Input dalam perangkat lunak ini sangat menyesuaikan atau sangat dibebaskan kepada user. User dapat menginput perangkat-perangkat listrik maupun circuit breaker sesuai yang ada di rumahnya atau pun berkreasi sendiri. yang kedua adalah Simulasi ini bertujuan agar user mendapat gambaran sederhana dari rangkaian alat listrik yang telah diinputkan. Tidak hanya itu, dalam simulasi ini juga terdapat fitur status circuit breaker sebagai indikasi penggunaan daya yang berlebih. Yang terakhir adalha perkiraan konsumsi daya. Pada fitur ini, P/L menghitung perkiraan konsumsi daya bulanan berdasarkan lama waktu penggunaan harian dari semua perangkat listrik yang telah dimasukkan pengguna.
+
 <br/>
 
 
