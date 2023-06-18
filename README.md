@@ -6,9 +6,9 @@
     <br />
   </p>
 </div>
+
 > Disusun untuk memenuhi Tugas 7 Implementasi Perancangan Perangkat Lunak IF2250 Rekayasa Perangkat Lunak.
 
-![image](https://github.com/mrsyaban/home-electricity-app/assets/95738230/6bf0b400-22ad-4f53-83fa-a1772990efb4)
 
 ## Deskripsi Singkat Program
 Pada perangkat lunak ini, terdapat berbagai fitur sehingga dapat menyelesaikan masalah pengguna. yang pertama adalah input yang menyesuaikan user. Input dalam perangkat lunak ini sangat menyesuaikan atau sangat dibebaskan kepada user. User dapat menginput perangkat-perangkat listrik maupun circuit breaker sesuai yang ada di rumahnya atau pun berkreasi sendiri. yang kedua adalah Simulasi ini bertujuan agar user mendapat gambaran sederhana dari rangkaian alat listrik yang telah diinputkan. Tidak hanya itu, dalam simulasi ini juga terdapat fitur status circuit breaker sebagai indikasi penggunaan daya yang berlebih. Yang terakhir adalha perkiraan konsumsi daya. Pada fitur ini, P/L menghitung perkiraan konsumsi daya bulanan berdasarkan lama waktu penggunaan harian dari semua perangkat listrik yang telah dimasukkan pengguna.
@@ -25,6 +25,11 @@ Pada perangkat lunak ini, terdapat berbagai fitur sehingga dapat menyelesaikan m
 1. Pastikan sudah menyiapkan *environment* program serta komputer terhubung dengan internet.
 2. Jalankan program `main.py` dengan menjalankan perintah `py src/main.py` pada *command prompt*.
 3. Jika berhasil dijalankan, maka akan terdapat *window* Python pada komputer.
+
+## Usage
+
+![image](https://github.com/mrsyaban/home-electricity-app/assets/95738230/6bf0b400-22ad-4f53-83fa-a1772990efb4)
+
 
 ## Daftar Modul yang Diimplementasi
 ### 1. ElectricityManager
